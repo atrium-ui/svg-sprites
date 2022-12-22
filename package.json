@@ -1,9 +1,13 @@
 {
   "name": "@luckydye/vite-svg-sprite",
-  "version": "0.1.4",
+  "version": "0.1.0",
   "description": "",
-  "main": "./lib/vite-svg-sprite.js",
-  "types": "./svg.ts",
+  "main": "./dist/vite-svg-sprite.cjs.js",
+  "exports": {
+    ".": "./dist/vite-svg-sprite.cjs.js",
+    "./Icon": "./dist/Icon.cjs.js"
+  },
+  "types": "./src/vite-svg-sprite.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",

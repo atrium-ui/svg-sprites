@@ -1,5 +1,6 @@
+import path from "node:path";
 import { defineConfig } from "vite";
-import svgSprite from "./vite-svg-sprite";
+import svgSprite from "./src/vite-svg-sprite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,7 +13,15 @@ export default defineConfig({
     },
     emptyOutDir: true,
     rollupOptions: {
-      external: ["node:crypto"],
+      input: [
+        path.resolve(__dirname, "src/Icon.ts"),
+        path.resolve(__dirname, "src/vite-svg-sprite.ts"),
+      ],
+      output: {
+        assetFileNames: `[name].[ext]`,
+        entryFileNames: () => "[name].[format].js",
+      },
+      external: ["fs", "fast-glob", "svg-sprite"],
     },
   },
   plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
