@@ -1,5 +1,5 @@
 {
-  "name": "@luckydye/vite-svg-sprite",
+  "name": "@atrium-ui/vite-svg-sprite",
   "version": "0.1.1",
   "description": "",
   "main": "./dist/vite-svg-sprite.cjs.js",
