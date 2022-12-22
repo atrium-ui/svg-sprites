@@ -24,5 +24,5 @@ export default defineConfig({
       external: ["fs", "fast-glob", "svg-sprite"],
     },
   },
-  plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
+  // plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
 });
