@@ -21,7 +21,7 @@ export default defineConfig({
         assetFileNames: `[name].[ext]`,
         entryFileNames: () => "[name].[format].js",
       },
-      external: ["fs", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
+      external: ["fs", "lit", "lit-html", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
     },
   },
   // plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
