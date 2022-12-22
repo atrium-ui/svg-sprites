@@ -25,5 +25,5 @@ export default defineConfig({
     },
   },
   plugins: [dts({ rollupTypes: true })],
-  // plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
+  // plugins: [svgSprite({ dir: "assets/icons/*.svg", dist: ".output/svg-sprite.sprite.svg" })],
 });

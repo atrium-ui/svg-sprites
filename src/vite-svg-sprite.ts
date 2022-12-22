@@ -11,7 +11,7 @@ interface SVGSpriteOptions {
 
 async function buildSprite(
   sourceDir: string,
-  distDir: string,
+  dist: string,
   options: SVGSpriteOptions
 ): Promise<string | undefined> {
   const entries = await fastGlob([sourceDir], { dot: true });
@@ -30,11 +30,15 @@ async function buildSprite(
   const { result } = await spriter.compileAsync();
   for (const mode in result) {
     for (const resource in result[mode]) {
-      fs.writeFileSync(distDir, result[mode][resource].contents);
+      const distDir = dist.split("/").reverse().slice(1).reverse().join("/");
+      if (!fs.existsSync(distDir)) {
+        fs.mkdirSync(distDir);
+      }
+      fs.writeFileSync(dist, result[mode][resource].contents);
     }
   }
 
-  return distDir;
+  return dist;
 }
 
 export default async function svgSprite(options: SVGSpriteOptions) {
