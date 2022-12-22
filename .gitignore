@@ -1,5 +1,6 @@
 # Logs
 npm-debug.log*
+*.log
 
 # Dependency directories
 node_modules/
@@ -15,3 +16,7 @@ node_modules/
 **/*.min.js
 dist
 lib
+
+assets
+
+svg-sprite.svg

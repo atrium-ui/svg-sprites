@@ -9,12 +9,17 @@
   "license": "ISC",
   "scripts": {
     "build": "vite build",
-    "build:w": "vite build --watch",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "fast-glob": "^3.2.12",
+    "lit": "^2.5.0",
+    "svg-sprite": "^2.0.2"
+  },
   "devDependencies": {
+    "@types/node": "^18.11.17",
+    "@types/svg-sprite": "^0.0.34",
     "vite": "^4.0.0"
   }
 }

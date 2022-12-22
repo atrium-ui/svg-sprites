@@ -1,11 +1,11 @@
 import { defineConfig } from "vite";
+import svgSprite from "./vite-svg-sprite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    target: "esnext",
-    minify: false,
-    outDir: "lib",
+    target: "es2020",
+    outDir: "dist",
     lib: {
       entry: "vite-svg-sprite.ts",
       formats: ["cjs"],
@@ -15,4 +15,5 @@ export default defineConfig({
       external: ["node:crypto"],
     },
   },
+  plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
 });
