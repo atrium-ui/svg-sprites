@@ -2,12 +2,9 @@
   "name": "@atrium-ui/vite-svg-sprite",
   "version": "0.1.7",
   "description": "",
-  "main": "./dist/vite-svg-sprite.js",
-  "types": "./dist/vite-svg-sprite.d.ts",
-  "exports": {
-    ".": "./dist/vite-svg-sprite.js",
-    "./Icon": "./dist/Icon.js"
-  },
+  "main": "dist/vite-svg-sprite.js",
+  "type": "module",
+  "types": "dist/vite-svg-sprite.d.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",

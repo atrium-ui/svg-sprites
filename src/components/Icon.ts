@@ -1,6 +1,5 @@
-import { css, html, LitElement } from "lit";
+import { css, svg, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 // @ts-ignore
 import svgSheetUrl from "svg-sprite:sheet";
 
@@ -29,11 +28,11 @@ export class SvgIcon extends LitElement {
 
   render() {
     return html`
-      ${unsafeHTML(`
+      ${svg`
         <svg class="icon">
           <use xlink:href="${this.src}"></use>
         </svg>
-      `)}
+      `}
     `;
   }
 }
