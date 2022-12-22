@@ -1,12 +1,20 @@
 {
-  "name": "vite-svg-sprite",
-  "version": "1.0.0",
+  "name": "@luckydye/vite-svg-sprite",
+  "version": "0.1.4",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "./lib/vite-svg-sprite.js",
+  "types": "./svg.ts",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "build": "vite build",
+    "build:w": "vite build --watch",
+    "lint": "eslint --ext .js,.ts .",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vite": "^4.0.0"
+  }
 }
