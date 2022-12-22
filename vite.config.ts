@@ -19,11 +19,13 @@ export default defineConfig({
         path.resolve(__dirname, "src/vite-svg-sprite.ts"),
       ],
       output: {
-        entryFileNames: () => "[name].[format].js",
+        entryFileNames: () => "[name].js",
       },
       external: ["fs", "lit", "lit-html", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
     },
   },
-  plugins: [dts({ rollupTypes: true })],
-  // plugins: [svgSprite({ dir: "assets/icons/*.svg", dist: ".output/svg-sprite.sprite.svg" })],
+  plugins: [
+    // svgSprite({ dir: "assets/icons/*.svg", dist: ".output/svg-sprite.sprite.svg" }),
+    dts({ rollupTypes: true }),
+  ],
 });

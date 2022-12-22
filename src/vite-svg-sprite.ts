@@ -68,7 +68,9 @@ export default async function svgSprite(options: SVGSpriteOptions) {
       }
     },
 
-    async closeBundle() {
+    async buildEnd() {
+      console.log(`"\n[vite:scg-sprite] Build spritesheet..."`);
+
       await buildSprite(options.dir, distPath, options);
     },
   };
