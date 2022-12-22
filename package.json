@@ -1,6 +1,6 @@
 {
   "name": "@luckydye/vite-svg-sprite",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "./dist/vite-svg-sprite.cjs.js",
   "exports": {
