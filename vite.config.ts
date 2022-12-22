@@ -14,14 +14,14 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: [
-        path.resolve(__dirname, "src/Icon.ts"),
+        path.resolve(__dirname, "src/components/Icon.ts"),
         path.resolve(__dirname, "src/vite-svg-sprite.ts"),
       ],
       output: {
         assetFileNames: `[name].[ext]`,
         entryFileNames: () => "[name].[format].js",
       },
-      external: ["fs", "fast-glob", "svg-sprite"],
+      external: ["fs", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
     },
   },
   // plugins: [svgSprite({ dir: "assets/icons/*.svg" })],

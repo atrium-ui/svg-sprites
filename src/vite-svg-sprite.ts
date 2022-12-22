@@ -6,6 +6,7 @@ interface SVGSpriteOptions {
   dir: string;
   dist?: string;
   svg?: SVGSpriter.Config;
+  component?: boolean;
 }
 
 async function buildSprite(
@@ -42,6 +43,8 @@ export default async function svgSprite(options: SVGSpriteOptions) {
 
   if (!options || !options.dir) {
     throw new Error("svg-sprite: option 'dir' needs to be specified.");
+  } else if (options.component) {
+    console.log("build");
   }
 
   const distPath = options.dist || "dist/svg-sprite.sprite.svg";
