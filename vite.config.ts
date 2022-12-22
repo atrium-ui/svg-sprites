@@ -1,5 +1,6 @@
 import path from "node:path";
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 import svgSprite from "./src/vite-svg-sprite";
 
 // https://vitejs.dev/config/
@@ -18,11 +19,11 @@ export default defineConfig({
         path.resolve(__dirname, "src/vite-svg-sprite.ts"),
       ],
       output: {
-        assetFileNames: `[name].[ext]`,
         entryFileNames: () => "[name].[format].js",
       },
       external: ["fs", "lit", "lit-html", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
     },
   },
+  plugins: [dts()],
   // plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
 });
