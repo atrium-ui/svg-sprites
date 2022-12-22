@@ -7,7 +7,6 @@
     ".": "./dist/vite-svg-sprite.cjs.js",
     "./Icon": "./dist/Icon.cjs.js"
   },
-  "types": "./src/vite-svg-sprite.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",
