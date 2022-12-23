@@ -27,19 +27,18 @@ async function buildSprite(sourceDir: string, options: SVGSpriteOptions): Promis
 
 export default function svgSprite(options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }) {
   const virtualModuleId = "svg-sprite:sheet";
-  const resolvedVirtualModuleId = "\0" + virtualModuleId;
 
   return {
     name: "svg-sprite",
 
     resolveId(id: string) {
       if (id === virtualModuleId) {
-        return resolvedVirtualModuleId;
+        return virtualModuleId;
       }
     },
 
     async load(id: string) {
-      if (id === resolvedVirtualModuleId) {
+      if (id === virtualModuleId) {
         const code = await buildSprite(options.dir, options);
         return `
           export const blob = new Blob(['${code}'], { type: "image/svg+xml" });
