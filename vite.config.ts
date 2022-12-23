@@ -10,7 +10,7 @@ export default defineConfig({
     outDir: "dist",
     lib: {
       entry: "vite-svg-sprite.ts",
-      formats: ["cjs"],
+      formats: ["es"],
     },
     emptyOutDir: true,
     rollupOptions: {
