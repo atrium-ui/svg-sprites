@@ -1,10 +1,8 @@
 # vite-svg-sprite
 
-Compiles all svg files in specific folder into a single sprite svg with symbols.
-Then at build time replaces a "svg-sprite:<outputfile>" import with the sprite url or inline data uri.
+Compile svgs in a directory to a spritesheet and make it available as inlined blob url.
+Includes a CustomElement that makes it easy to use any icon.
 
-
-Define source directory.
-Compile all svgs into one sheet.
-Provide Icon Component.
-Give Icon component path to sheet.
+```html
+<svg-icon icon="speaker" />
+```

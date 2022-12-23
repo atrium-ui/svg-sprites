@@ -25,7 +25,7 @@ async function buildSprite(sourceDir: string, options: SVGSpriteOptions): Promis
   return result.defs.sprite.contents.toString("utf8");
 }
 
-export default async function svgSprite(options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }) {
+export default function svgSprite(options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }) {
   const virtualModuleId = "svg-sprite:sheet";
   const resolvedVirtualModuleId = "\0" + virtualModuleId;
 
