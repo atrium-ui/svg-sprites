@@ -25,24 +25,26 @@ async function buildSprite(sourceDir: string, options: SVGSpriteOptions): Promis
   return result.defs.sprite.contents.toString("utf8");
 }
 
-export default function svgSprite(options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }) {
-  const virtualModuleId = "svg-sprite:sheet";
+export default async function svgSprite(options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }) {
+  const compId = "dist/Icon.mjs";
+
+  const svg = await buildSprite(options.dir, options);
 
   return {
     name: "svg-sprite",
 
-    resolveId(id: string) {
-      if (id === virtualModuleId) {
-        return virtualModuleId;
-      }
-    },
+    enforce: "pre",
 
-    async load(id: string) {
-      if (id === virtualModuleId) {
-        const code = await buildSprite(options.dir, options);
-        return `
-          export const blob = new Blob(['${code}'], { type: "image/svg+xml" });
-        `;
+    transform(code: string, id: string) {
+      if (id.match(compId)) {
+        const inject = `const blob = new Blob(['${svg}'], { type: "image/svg+xml" });`;
+
+        return {
+          code: `
+            ${inject}
+            ${code}
+          `,
+        };
       }
     },
   };

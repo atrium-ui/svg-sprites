@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: "dist",
     lib: {
       entry: "src/vite-svg-sprite.ts",
-      formats: ["es", "cjs"],
+      formats: ["es"],
       fileName: "vite-svg-sprite",
     },
     emptyOutDir: false,

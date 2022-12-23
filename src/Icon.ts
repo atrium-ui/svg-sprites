@@ -1,9 +1,7 @@
 import { LitElement, css } from "lit";
-import { blob } from "svg-sprite:sheet";
 
-// TODO: dont depend on lit
-
-const sheetURL = URL.createObjectURL(blob);
+// @ts-ignore
+const sheetURL = URL.createObjectURL(blob); // injecting blob var
 
 export class SvgIcon extends LitElement {
   static get styles() {
