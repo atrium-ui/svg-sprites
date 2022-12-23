@@ -1,39 +1,43 @@
-import { css, svg, html, LitElement } from "lit";
-import { property } from "lit/decorators.js";
-// @ts-ignore
-import svgSheetUrl from "svg-sprite:sheet";
+import { LitElement, css } from "lit";
+import { blob } from "svg-sprite:sheet";
+
+// TODO: dont depend on lit
+
+const sheetURL = URL.createObjectURL(blob);
 
 export class SvgIcon extends LitElement {
   static get styles() {
     return css`
       :host {
-        color: inherit;
+        margin: 0 2px;
         display: inline-block;
-      }
-
-      .icon {
         color: inherit;
+        vertical-align: sub;
+      }
+      svg {
+        display: block;
         width: 1em;
         height: 1em;
       }
     `;
   }
 
-  @property({ type: String })
-  public name?: string;
-
-  get src() {
-    return svgSheetUrl + "#" + this.name;
+  static get properties() {
+    return {
+      icon: {
+        type: String,
+      },
+    };
   }
 
-  render() {
-    return html`
-      ${svg`
-        <svg class="icon">
-          <use xlink:href="${this.src}"></use>
-        </svg>
-      `}
-    `;
+  public icon?: string;
+
+  protected render() {
+    this.shadowRoot
+      ? (this.shadowRoot.innerHTML = `
+        <svg><use xlink:href="${sheetURL}${"#" + this.icon}"></use></svg>
+      `)
+      : null;
   }
 }
 

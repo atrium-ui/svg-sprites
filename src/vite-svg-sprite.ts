@@ -4,17 +4,11 @@ import SVGSpriter from "svg-sprite";
 
 interface SVGSpriteOptions {
   dir: string;
-  dist?: string;
   svg?: SVGSpriter.Config;
-  component?: boolean;
 }
 
-async function buildSprite(
-  sourceDir: string,
-  dist: string,
-  options: SVGSpriteOptions
-): Promise<string | undefined> {
-  const entries = await fastGlob([sourceDir], { dot: true });
+async function buildSprite(sourceDir: string, options: SVGSpriteOptions): Promise<string[]> {
+  const entries = await fastGlob([sourceDir]);
   const spriter = new SVGSpriter({
     mode: {
       defs: true, // Create a «defs» sprite
@@ -23,35 +17,17 @@ async function buildSprite(
   });
 
   for (let entry of entries) {
-    const file = fs.readFileSync(entry, { encoding: "utf-8" });
-    spriter.add(entry, null, file);
+    spriter.add(entry, null, fs.readFileSync(entry, { encoding: "utf-8" }));
   }
 
   const { result } = await spriter.compileAsync();
-  for (const mode in result) {
-    for (const resource in result[mode]) {
-      const distDir = dist.split("/").reverse().slice(1).reverse().join("/");
-      if (!fs.existsSync(distDir)) {
-        fs.mkdirSync(distDir);
-      }
-      fs.writeFileSync(dist, result[mode][resource].contents);
-    }
-  }
 
-  return dist;
+  return result.defs.sprite.contents.toString("utf8");
 }
 
-export default async function svgSprite(options: SVGSpriteOptions) {
+export default async function svgSprite(options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }) {
   const virtualModuleId = "svg-sprite:sheet";
   const resolvedVirtualModuleId = "\0" + virtualModuleId;
-
-  if (!options || !options.dir) {
-    throw new Error("svg-sprite: option 'dir' needs to be specified.");
-  } else if (options.component) {
-    console.log("build");
-  }
-
-  const distPath = options.dist || "dist/svg-sprite.sprite.svg";
 
   return {
     name: "svg-sprite",
@@ -62,16 +38,13 @@ export default async function svgSprite(options: SVGSpriteOptions) {
       }
     },
 
-    load(id: string) {
+    async load(id: string) {
       if (id === resolvedVirtualModuleId) {
-        return `export default "${distPath}";`;
+        const code = await buildSprite(options.dir, options);
+        return `
+          export const blob = new Blob(['${code}'], { type: "image/svg+xml" });
+        `;
       }
-    },
-
-    async buildEnd() {
-      console.log(`"\n[vite:scg-sprite] Build spritesheet..."`);
-
-      await buildSprite(options.dir, distPath, options);
     },
   };
 }

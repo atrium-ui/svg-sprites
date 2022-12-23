@@ -24,8 +24,5 @@ export default defineConfig({
       external: ["fs", "lit", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
     },
   },
-  plugins: [
-    // svgSprite({ dir: "assets/icons/*.svg", dist: ".output/svg-sprite.sprite.svg" }),
-    dts({ rollupTypes: true }),
-  ],
+  plugins: [svgSprite({ dir: "assets/icons/*.svg" }), dts({ rollupTypes: true })],
 });
