@@ -14,9 +14,11 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
-      - uses: actions/setup-node@v3
-      - run: npm i 
-      - run: npm run build
-      - run: npm publish --access=public --no-git-checks
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.14.0
+      - run: pnpm i 
+      - run: pnpm build
+      - run: pnpm publish --access=public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
