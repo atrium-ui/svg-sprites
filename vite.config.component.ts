@@ -7,7 +7,7 @@ export default defineConfig({
     target: "es2020",
     outDir: "dist",
     lib: {
-      entry: "src/components/Icon.ts",
+      entry: "src/Icon.ts",
       formats: ["es", "cjs"],
       fileName: "Icon",
     },
