@@ -7,9 +7,9 @@ export default defineConfig({
     target: "es2020",
     outDir: "dist",
     lib: {
-      entry: "src/vite-svg-sprite.ts",
+      entry: "src/components/Icon.ts",
       formats: ["es", "cjs"],
-      fileName: "vite-svg-sprite",
+      fileName: "Icon",
     },
     emptyOutDir: false,
     rollupOptions: {
