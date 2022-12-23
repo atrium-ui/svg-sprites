@@ -1,6 +1,6 @@
 {
   "name": "@atrium-ui/vite-svg-sprite",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "",
   "main": "./dist/vite-svg-sprite.js",
   "exports": {
