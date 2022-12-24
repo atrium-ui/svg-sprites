@@ -29,24 +29,32 @@ async function buildSprite(sourceDir: string, options: SVGSpriteOptions): Promis
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }
 ): PluginOption {
-  const virtualId = "svg:sheet";
-
   const svg = buildSprite(options.dir, options);
+
+  let importId: string | null;
 
   return {
     name: "svg-sprite",
     enforce: "pre",
 
-    resolveId(id) {
-      if (id === virtualId) {
-        return id;
+    async resolveId(source, importer, options) {
+      if (source === "@atrium-ui/vite-svg-sprite/Icon") {
+        const resolved = await this.resolve(source, importer, { skipSelf: true, ...options });
+        importId = resolved ? resolved.id : null;
+        return importId;
       }
-      return null;
     },
 
-    async load(id) {
-      if (id === virtualId) {
-        return `export const sheetURL = URL.createObjectURL(new Blob([\`${await svg}\`], { type: "image/svg+xml" }));`;
+    async transform(code, id) {
+      if (id === importId) {
+        const injection = `export const sheetURL = URL.createObjectURL(new Blob([\`${await svg}\`], { type: "image/svg+xml" }));`;
+
+        return {
+          code: `
+            ${code}
+            ${injection}
+          `,
+        };
       }
       return null;
     },
