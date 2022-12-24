@@ -63,19 +63,11 @@ export default function svgSprite(
 
     async transform(code, id) {
       if (id === importId) {
-        const injection = `const _svgSheetBlob_ = new Blob([\`${await svg}\`], { type: "image/svg+xml" });`;
-
-        if (!code.match("_svgSheetBlob_")) {
-          return {
-            code: `
-              ${code}
-              ${injection}
-            `,
-          };
-        }
-
         return {
-          code,
+          code: code.replace(
+            /"_svgSheetBlob_"/g,
+            `new Blob([\`${await svg}\`], { type: "image/svg+xml" });`
+          ),
         };
       }
       return null;

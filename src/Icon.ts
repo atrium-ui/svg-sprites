@@ -1,6 +1,7 @@
 import { LitElement, css } from "lit";
 
 let svgSheetUrl = "";
+let _svgSheetBlob_: string | Blob = "_svgSheetBlob_";
 
 export class SvgIcon extends LitElement {
   static get styles() {
@@ -28,7 +29,9 @@ export class SvgIcon extends LitElement {
   }
 
   static src() {
-    if (!svgSheetUrl) svgSheetUrl = URL.createObjectURL(_svgSheetBlob_);
+    if (!svgSheetUrl && _svgSheetBlob_ instanceof Blob)
+      svgSheetUrl = URL.createObjectURL(_svgSheetBlob_);
+
     return svgSheetUrl;
   }
 

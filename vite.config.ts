@@ -27,7 +27,7 @@ const config2: UserConfig = {
       formats: ["cjs", "es"],
       fileName: "Icon",
     },
-    emptyOutDir: false,
+    emptyOutDir: true,
     rollupOptions: {
       external: ["fs", "lit", "fast-glob", "svg-sprite", "svg:sheet"],
     },
