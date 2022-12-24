@@ -31,6 +31,8 @@ export default function svgSprite(
 ): PluginOption {
   const svg = buildSprite(options.dir, options);
 
+  const virtualId = "svg:sheet";
+
   let importId: string | null;
 
   return {
@@ -43,11 +45,22 @@ export default function svgSprite(
         importId = resolved ? resolved.id : null;
         return importId;
       }
+      if (source === virtualId) {
+        return source;
+      }
+    },
+
+    async load(id) {
+      if (id === virtualId) {
+        return `
+          export default new Blob([\`${await svg}\`], { type: "image/svg+xml" });
+        `;
+      }
     },
 
     async transform(code, id) {
       if (id === importId) {
-        const injection = `export const sheetURL = URL.createObjectURL(new Blob([\`${await svg}\`], { type: "image/svg+xml" }));`;
+        const injection = `const svgSheetBlob = new Blob([\`${await svg}\`], { type: "image/svg+xml" });`;
 
         return {
           code: `

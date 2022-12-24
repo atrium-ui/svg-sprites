@@ -1,5 +1,7 @@
 import { LitElement, css } from "lit";
 
+let svgSheetUrl = "";
+
 export class SvgIcon extends LitElement {
   static get styles() {
     return css`
@@ -25,12 +27,17 @@ export class SvgIcon extends LitElement {
     };
   }
 
+  static src() {
+    if (!svgSheetUrl) svgSheetUrl = URL.createObjectURL(svgSheetBlob);
+    return svgSheetUrl;
+  }
+
   public icon?: string;
 
   protected render() {
     this.shadowRoot
       ? (this.shadowRoot.innerHTML = `
-        <svg><use xlink:href="${sheetURL}${"#" + this.icon}"></use></svg>
+        <svg><use xlink:href="${SvgIcon.src()}${"#" + this.icon}"></use></svg>
       `)
       : null;
   }
