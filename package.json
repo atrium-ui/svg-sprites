@@ -3,10 +3,6 @@
   "version": "0.2.18",
   "description": "",
   "main": "./dist/vite-svg-sprite.js",
-  "exports": {
-    ".": "./dist/vite-svg-sprite.js",
-    "./Icon": "./dist/Icon.mjs"
-  },
   "types": "./src",
   "keywords": [],
   "author": "",

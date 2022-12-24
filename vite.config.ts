@@ -21,7 +21,7 @@ const config1: UserConfig = {
 const config2: UserConfig = {
   build: {
     target: "es2020",
-    outDir: "dist",
+    outDir: "component",
     lib: {
       entry: "src/Icon.ts",
       formats: ["cjs", "es"],
