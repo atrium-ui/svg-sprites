@@ -28,7 +28,7 @@ export class SvgIcon extends LitElement {
   }
 
   static src() {
-    if (!svgSheetUrl) svgSheetUrl = URL.createObjectURL(svgSheetBlob);
+    if (!svgSheetUrl) svgSheetUrl = URL.createObjectURL(_svgSheetBlob_);
     return svgSheetUrl;
   }
 

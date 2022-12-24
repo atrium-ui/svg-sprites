@@ -2,6 +2,7 @@ import fs from "fs";
 import fastGlob from "fast-glob";
 import SVGSpriter from "svg-sprite";
 import type { PluginOption } from "vite";
+import { name } from "../package.json";
 
 interface SVGSpriteOptions {
   dir: string;
@@ -40,10 +41,12 @@ export default function svgSprite(
     enforce: "pre",
 
     async resolveId(source, importer, options) {
-      if (source.match("@atrium-ui/vite-svg-sprite/component/Icon")) {
+      if (source.match(name + "/component")) {
         const resolved = await this.resolve(source, importer, { skipSelf: true, ...options });
-        importId = resolved ? resolved.id : null;
-        return importId;
+        if (resolved && !resolved.external) {
+          importId = resolved ? resolved.id : null;
+          return importId;
+        }
       }
       if (source === virtualId) {
         return source;
@@ -60,7 +63,7 @@ export default function svgSprite(
 
     async transform(code, id) {
       if (id === importId) {
-        const injection = `const svgSheetBlob = new Blob([\`${await svg}\`], { type: "image/svg+xml" });`;
+        const injection = `const _svgSheetBlob_ = new Blob([\`${await svg}\`], { type: "image/svg+xml" });`;
 
         return {
           code: `
