@@ -40,7 +40,7 @@ export default function svgSprite(
     enforce: "pre",
 
     async resolveId(source, importer, options) {
-      if (source === "@atrium-ui/vite-svg-sprite/component/Icon") {
+      if (source.match("@atrium-ui/vite-svg-sprite/component/Icon")) {
         const resolved = await this.resolve(source, importer, { skipSelf: true, ...options });
         importId = resolved ? resolved.id : null;
         return importId;
