@@ -1,6 +1,7 @@
 import fs from "fs";
 import fastGlob from "fast-glob";
 import SVGSpriter from "svg-sprite";
+import type { PluginOption, ViteDevServer } from "vite";
 
 interface SVGSpriteOptions {
   dir: string;
@@ -25,19 +26,21 @@ async function buildSprite(sourceDir: string, options: SVGSpriteOptions): Promis
   return result.defs.sprite.contents.toString("utf8");
 }
 
-export default async function svgSprite(options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }) {
+export default function svgSprite(
+  options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }
+): PluginOption {
   const compId = "dist/Icon.mjs";
 
-  const svg = await buildSprite(options.dir, options);
+  const svg = buildSprite(options.dir, options);
 
   return {
     name: "svg-sprite",
 
     enforce: "pre",
 
-    transform(code: string, id: string) {
+    async transform(code: string, id: string) {
       if (id.match(compId)) {
-        const inject = `const blob = new Blob(['${svg}'], { type: "image/svg+xml" });`;
+        const inject = `const blob = new Blob(['${await svg}'], { type: "image/svg+xml" });`;
 
         return {
           code: `

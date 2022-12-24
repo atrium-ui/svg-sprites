@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: "dist",
     lib: {
       entry: "src/Icon.ts",
-      formats: ["es"],
+      formats: ["cjs"],
       fileName: "Icon",
     },
     emptyOutDir: false,

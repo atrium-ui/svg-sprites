@@ -2,9 +2,9 @@
   "name": "@atrium-ui/vite-svg-sprite",
   "version": "0.2.12",
   "description": "",
-  "main": "./dist/vite-svg-sprite.mjs",
+  "main": "./dist/vite-svg-sprite.js",
   "exports": {
-    ".": "./dist/vite-svg-sprite.mjs",
+    ".": "./dist/vite-svg-sprite.js",
     "./Icon": "./dist/Icon.mjs"
   },
   "types": "./src",
