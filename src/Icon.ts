@@ -1,4 +1,5 @@
 import { LitElement, css } from "lit";
+import "svg:sheet";
 
 export class SvgIcon extends LitElement {
   static get styles() {

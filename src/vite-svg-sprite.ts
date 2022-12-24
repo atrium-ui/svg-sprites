@@ -37,26 +37,28 @@ export default function svgSprite(
     name: "svg-sprite",
     enforce: "pre",
 
-    // resolveId(id) {
-    //   if (id === "@atrium-ui/vite-svg-sprite/Icon") {
-    //     console.log("XXXXXXXXXXXXXXXXXXXXXXXXX");
+    resolveId(id) {
+      if (id === "svg:sheet") {
+        return virtualId;
+      }
+    },
 
-    //     // return virtualId;
+    // async load(id) {
+    //   if (id === virtualId) {
+
     //   }
     // },
 
-    // load() {},
+    // async transform(code: string, id: string) {
+    //   if (id === virtualId) {
+    //     console.log(code);
 
-    async transform(code: string, id: string) {
-      console.log(id);
-
-      if (id.match("dist/Icon.mjs")) {
-        return `
-          ${code}
-          ${`const sheetURL = URL.createObjectURL(new Blob(['${await svg}'], { type: "image/svg+xml" }));`}
-        `;
-      }
-    },
+    //     return `
+    //       ${code}
+    //       ${`const sheetURL = URL.createObjectURL(new Blob(['${await svg}'], { type: "image/svg+xml" }));`}
+    //     `;
+    //   }
+    // },
 
     // async load(id) {
     //   if (id === virtualId) {

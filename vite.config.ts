@@ -12,7 +12,7 @@ const config1: UserConfig = {
     },
     emptyOutDir: true,
     rollupOptions: {
-      external: ["fs", "lit", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
+      external: ["fs", "lit", "fast-glob", "svg-sprite", "svg:sheet"],
     },
   },
   plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
@@ -29,7 +29,7 @@ const config2: UserConfig = {
     },
     emptyOutDir: false,
     rollupOptions: {
-      external: ["fs", "lit", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
+      external: ["fs", "lit", "fast-glob", "svg-sprite", "svg:sheet"],
     },
   },
   plugins: [svgSprite({ dir: "assets/icons/*.svg" })],
