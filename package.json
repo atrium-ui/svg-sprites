@@ -12,9 +12,9 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build": "npm run build:component && npm run build:plugin",
-    "build:plugin": "vite build",
-    "build:component": "vite build --config vite.config.component.ts",
+    "build": "npm run build:plugin && npm run build:icon",
+    "build:icon": "vite build",
+    "build:plugin": "vite build -- --icon",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },

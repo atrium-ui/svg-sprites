@@ -1,7 +1,7 @@
 import fs from "fs";
 import fastGlob from "fast-glob";
 import SVGSpriter from "svg-sprite";
-import type { PluginOption, ViteDevServer } from "vite";
+import type { PluginOption } from "vite";
 
 interface SVGSpriteOptions {
   dir: string;
@@ -29,26 +29,45 @@ async function buildSprite(sourceDir: string, options: SVGSpriteOptions): Promis
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }
 ): PluginOption {
-  const compId = "dist/Icon.mjs";
+  const virtualId = "vite-svg-sprite:sheet";
 
   const svg = buildSprite(options.dir, options);
 
   return {
     name: "svg-sprite",
-
     enforce: "pre",
 
-    async transform(code: string, id: string) {
-      if (id.match(compId)) {
-        const inject = `const blob = new Blob(['${await svg}'], { type: "image/svg+xml" });`;
+    // resolveId(id) {
+    //   if (id === "@atrium-ui/vite-svg-sprite/Icon") {
+    //     console.log("XXXXXXXXXXXXXXXXXXXXXXXXX");
 
-        return {
-          code: `
-            ${inject}
-            ${code}
-          `,
-        };
+    //     // return virtualId;
+    //   }
+    // },
+
+    // load() {},
+
+    async transform(code: string, id: string) {
+      console.log(id);
+
+      if (id.match("dist/Icon.mjs")) {
+        return `
+          ${code}
+          ${`const sheetURL = URL.createObjectURL(new Blob(['${await svg}'], { type: "image/svg+xml" }));`}
+        `;
       }
     },
+
+    // async load(id) {
+    //   if (id === virtualId) {
+    //     console.log(await this.load({ id: "./Icon.ts" }));
+    //     // const c = this.resolve("src/Icon.ts");
+    //     // console.log(c);
+
+    //     return `
+    //       ${`const sheetURL = URL.createObjectURL(new Blob(['${await svg}'], { type: "image/svg+xml" }));`}
+    //     `;
+    //   }
+    // },
   };
 }

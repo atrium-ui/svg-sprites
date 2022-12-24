@@ -1,8 +1,5 @@
 import { LitElement, css } from "lit";
 
-// @ts-ignore
-const sheetURL = URL.createObjectURL(blob); // injecting blob var
-
 export class SvgIcon extends LitElement {
   static get styles() {
     return css`
