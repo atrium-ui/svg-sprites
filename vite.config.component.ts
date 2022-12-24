@@ -8,10 +8,10 @@ export default defineConfig({
     outDir: "dist",
     lib: {
       entry: "src/Icon.ts",
-      formats: ["cjs"],
+      formats: ["cjs", "es"],
       fileName: "Icon",
     },
-    emptyOutDir: false,
+    emptyOutDir: true,
     rollupOptions: {
       external: ["fs", "lit", "fast-glob", "svg-sprite", "svg-sprite:sheet"],
     },
