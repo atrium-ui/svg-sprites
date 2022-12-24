@@ -7,8 +7,8 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
-    "resolveJsonModule": true,
-    "types": ["declaration.d.ts"]
+    "resolveJsonModule": true
   },
+  "include": ["./declaration.d.ts"],
   "exclude": ["dist"]
 }

@@ -1,3 +1,3 @@
-declare module "svg:sheet" {
+declare module "~svg-sprite" {
   const sheetURL: string;
 }
