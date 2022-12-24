@@ -1,4 +1,3 @@
-declare module "svg-sprite:sheet" {
-  const blob: Blob;
-  const svg: string;
+declare module "svg:sheet" {
+  const sheetURL: string;
 }

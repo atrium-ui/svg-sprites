@@ -6,7 +6,8 @@
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "types": ["declaration.d.ts"]
   },
   "exclude": ["dist"]
 }

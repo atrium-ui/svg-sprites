@@ -29,7 +29,7 @@ async function buildSprite(sourceDir: string, options: SVGSpriteOptions): Promis
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }
 ): PluginOption {
-  const virtualId = "vite-svg-sprite:sheet";
+  const virtualId = "svg:sheet";
 
   const svg = buildSprite(options.dir, options);
 
@@ -38,38 +38,17 @@ export default function svgSprite(
     enforce: "pre",
 
     resolveId(id) {
-      if (id === "svg:sheet") {
-        return virtualId;
+      if (id === virtualId) {
+        return id;
       }
+      return null;
     },
 
-    // async load(id) {
-    //   if (id === virtualId) {
-
-    //   }
-    // },
-
-    // async transform(code: string, id: string) {
-    //   if (id === virtualId) {
-    //     console.log(code);
-
-    //     return `
-    //       ${code}
-    //       ${`const sheetURL = URL.createObjectURL(new Blob(['${await svg}'], { type: "image/svg+xml" }));`}
-    //     `;
-    //   }
-    // },
-
-    // async load(id) {
-    //   if (id === virtualId) {
-    //     console.log(await this.load({ id: "./Icon.ts" }));
-    //     // const c = this.resolve("src/Icon.ts");
-    //     // console.log(c);
-
-    //     return `
-    //       ${`const sheetURL = URL.createObjectURL(new Blob(['${await svg}'], { type: "image/svg+xml" }));`}
-    //     `;
-    //   }
-    // },
+    async load(id) {
+      if (id === virtualId) {
+        return `export const sheetURL = URL.createObjectURL(new Blob([\`${await svg}\`], { type: "image/svg+xml" }));`;
+      }
+      return null;
+    },
   };
 }
