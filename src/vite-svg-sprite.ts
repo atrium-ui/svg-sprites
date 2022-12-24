@@ -32,7 +32,7 @@ export default function svgSprite(
 ): PluginOption {
   const svg = buildSprite(options.dir, options);
 
-  const virtualId = "svg:sheet";
+  const virtualId = "~svg-sprite";
 
   let importId: string | null;
 
