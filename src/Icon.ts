@@ -1,11 +1,51 @@
-import { LitElement, css } from "lit";
-
 let svgSheetUrl = "";
 let _svgSheetBlob_: string | Blob = "_svgSheetBlob_";
 
-export class SvgIcon extends LitElement {
-  static get styles() {
-    return css`
+export class SvgIcon extends HTMLElement {
+  static sheet?: CSSStyleSheet;
+
+  static getStyleSheet(): CSSStyleSheet {
+    if (!SvgIcon.sheet) {
+      const sheet = new CSSStyleSheet();
+      sheet.replaceSync(this.styles);
+      SvgIcon.sheet = sheet;
+    }
+    return SvgIcon.sheet;
+  }
+
+  static get observedAttributes() {
+    return ["icon"];
+  }
+
+  attributeChangedCallback(): void {
+    this.update();
+  }
+
+  connectedCallback(): void {
+    if (!this.shadowRoot) {
+      const shadow = this.attachShadow({ mode: "open" });
+      shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
+      this.update();
+    }
+  }
+
+  public get icon(): string | null {
+    return this.getAttribute("icon");
+  }
+
+  public set icon(icon: string | null) {
+    if (icon !== null) this.setAttribute("icon", icon);
+  }
+
+  private static src() {
+    if (!svgSheetUrl && _svgSheetBlob_ instanceof Blob)
+      svgSheetUrl = URL.createObjectURL(_svgSheetBlob_);
+
+    return svgSheetUrl;
+  }
+
+  private static get styles(): string {
+    return /*css*/ `
       :host {
         margin: 0 2px;
         display: inline-block;
@@ -20,28 +60,11 @@ export class SvgIcon extends LitElement {
     `;
   }
 
-  static get properties() {
-    return {
-      icon: {
-        type: String,
-      },
-    };
-  }
-
-  static src() {
-    if (!svgSheetUrl && _svgSheetBlob_ instanceof Blob)
-      svgSheetUrl = URL.createObjectURL(_svgSheetBlob_);
-
-    return svgSheetUrl;
-  }
-
-  public icon?: string;
-
-  protected render() {
+  private update() {
     this.shadowRoot
       ? (this.shadowRoot.innerHTML = `
-        <svg><use xlink:href="${SvgIcon.src()}${"#" + this.icon}"></use></svg>
-      `)
+      <svg><use xlink:href="${SvgIcon.src()}${"#" + this.icon}"></use></svg>
+    `)
       : null;
   }
 }

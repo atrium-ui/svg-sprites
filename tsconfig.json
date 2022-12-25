@@ -9,6 +9,5 @@
     "useDefineForClassFields": false,
     "resolveJsonModule": true
   },
-  "include": ["./declaration.d.ts"],
-  "exclude": ["dist"]
+  "exclude": ["plugin", "component", "node_modules"]
 }

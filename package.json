@@ -7,21 +7,21 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build": "npm run build:plugin && npm run build:icon",
-    "build:plugin": "vite build -- --icon",
-    "build:icon": "vite build",
+    "test": "vite build test/vite",
+    "build": "vite build && vite build -- --wp && vite build -- --vite",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "dependencies": {
     "fast-glob": "^3.2.12",
-    "lit": "^2.5.0",
     "svg-sprite": "^2.0.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
     "@types/svg-sprite": "^0.0.34",
     "vite": "^4.0.3",
-    "vite-plugin-dts": "^1.7.1"
+    "vite-plugin-dts": "^1.7.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }

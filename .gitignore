@@ -14,10 +14,8 @@ node_modules/
 # bundles
 **/*.bundle.js
 **/*.min.js
-dist
 component
-lib
+plugin
 
-assets
-
-svg-sprite.svg
+# tests
+dist
