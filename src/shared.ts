@@ -14,8 +14,12 @@ export function replacePlaceholder(code: string, svg: string) {
 
 export function createSheetCode(svg: string) {
   return `
-    export default function () {
+    export function blob() {
       return new Blob([\`${svg}\`], { type: "image/svg+xml" });
+    }
+    
+    export function src() {
+      return URL.createObjectURL(new Blob([\`${svg}\`], { type: "image/svg+xml" }));
     }
   `;
 }

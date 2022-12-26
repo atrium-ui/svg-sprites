@@ -1,5 +1,4 @@
 import { defineConfig, UserConfig } from "vite";
-import dts from "vite-plugin-dts";
 
 const external = ["fs", "fast-glob", "svg-sprite", "webpack"];
 
@@ -9,11 +8,6 @@ const common = {
   rollupOptions: {
     external,
   },
-};
-
-const commontDts = {
-  rollupTypes: true,
-  copyDtsFiles: false,
 };
 
 const webpackPlugin: UserConfig = {
@@ -26,7 +20,6 @@ const webpackPlugin: UserConfig = {
       fileName: "index",
     },
   },
-  plugins: [dts(commontDts)],
 };
 
 const vitePlugin: UserConfig = {
@@ -39,7 +32,6 @@ const vitePlugin: UserConfig = {
       fileName: "index",
     },
   },
-  plugins: [dts(commontDts)],
 };
 
 const component: UserConfig = {
@@ -52,7 +44,6 @@ const component: UserConfig = {
       fileName: "index",
     },
   },
-  plugins: [dts(commontDts)],
 };
 
 let config = component;

@@ -14,8 +14,6 @@ export default async function (code: string) {
     return undefined;
   });
 
-  if (!svg === undefined) return callback();
-
   if (code) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -35,5 +33,5 @@ export default async function (code: string) {
     }
   }
 
-  return callback();
+  return callback(null, code);
 }
