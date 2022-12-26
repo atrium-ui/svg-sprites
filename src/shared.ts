@@ -1,11 +1,13 @@
 import { main } from "../package.json";
 
+const moduleId = "vite-svg-sprite";
+
 export function isComponentImport(source: string) {
-  return source.match("vite-svg-sprite/component");
+  return source.match(moduleId + "/component");
 }
 
 export function isSheetImport(source: string) {
-  return source === "~svg-sprite" || source.match("vite-svg-sprite" + main);
+  return source.match(moduleId + main);
 }
 
 export function replacePlaceholder(code: string, svg: string) {

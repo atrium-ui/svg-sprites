@@ -1,5 +1,5 @@
 import { getSheet, SVGSpriteOptions } from "./sheet";
-import { createSheetCode, replacePlaceholder, isComponentImport, isSheetImport } from "./shared";
+import { replacePlaceholder, isComponentImport, isSheetImport } from "./shared";
 
 export default async function (code: string) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -20,7 +20,7 @@ export default async function (code: string) {
     if (isSheetImport(this.resource)) {
       const source = await svg;
       if (source) {
-        return callback(null, createSheetCode(source));
+        return callback(null, replacePlaceholder(code, source));
       }
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

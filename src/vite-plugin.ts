@@ -10,7 +10,7 @@ export default function svgSprite(
   let componentImportId: string | null;
 
   return {
-    name: "svg-sprite",
+    name: "vite-svg-sprite",
     enforce: "pre",
 
     async resolveId(source, importer, options) {
@@ -33,11 +33,18 @@ export default function svgSprite(
     },
 
     async transform(code, id) {
+      if (isSheetImport(id)) {
+        return {
+          code: replacePlaceholder(code, await svg),
+        };
+      }
+
       if (id === componentImportId) {
         return {
           code: replacePlaceholder(code, await svg),
         };
       }
+
       return null;
     },
   };
