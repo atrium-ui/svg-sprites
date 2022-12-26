@@ -1,6 +1,6 @@
 {
   "name": "@atrium-ui/vite-svg-sprite",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "",
   "main": "sprite-sheet.js",
   "module": "sprite-sheet.js",
@@ -10,7 +10,7 @@
   "scripts": {
     "test": "vite build test/vite && webpack -c test/wp/webpack.config.js",
     "lint": "eslint --ext .js,.ts .",
-    "build": "pnpm build:component & pnpm build:vite & pnpm build:webpack",
+    "build": "npm run build:component & npm run build:vite & npm run build:webpack",
     "build:component": "vite build",
     "build:vite": "vite build -- --vite",
     "build:webpack": "vite build -- --wp",
