@@ -9,17 +9,19 @@ export function isSheetImport(source: string) {
 }
 
 export function replacePlaceholder(code: string, svg: string) {
-  return code.replace(/"_svgSheetBlob_"/g, `new Blob([\`${svg}\`], { type: "image/svg+xml" });`);
+  return code.replace(/\"_svgSheetString_\"/g, `\`${svg}\``);
 }
 
 export function createSheetCode(svg: string) {
   return `
+    globalThis.Blob = globalThis.Blob || class {};
+
     export function blob() {
-      return new Blob([\`${svg}\`], { type: "image/svg+xml" });
+      return new globalThis.Blob([\`${svg}\`], { type: "image/svg+xml" });
     }
-    
+
     export function src() {
-      return URL.createObjectURL(new Blob([\`${svg}\`], { type: "image/svg+xml" }));
+      return URL.createObjectURL(blob());
     }
   `;
 }

@@ -1,12 +1,13 @@
 import type { SvgIcon } from "./src/component/Icon";
 
-// data placeholder
+globalThis.Blob = globalThis.Blob || class {};
+
 export function blob() {
-  return new Blob([], { type: "image/svg+xml" });
+  return new globalThis.Blob(["_svgSheetString_"], { type: "image/svg+xml" });
 }
 
 export function src() {
-  return URL.createObjectURL(new Blob([], { type: "image/svg+xml" }));
+  return URL.createObjectURL(blob());
 }
 
 declare global {

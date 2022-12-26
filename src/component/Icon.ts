@@ -1,5 +1,10 @@
 let svgSheetUrl = "";
-const _svgSheetBlob_: string | Blob = "_svgSheetBlob_";
+let svgSheetBlob: Blob;
+
+if (typeof window !== "undefined") {
+  svgSheetBlob = new Blob(["_svgSheetString_"], { type: "image/svg+xml" });
+  svgSheetUrl = URL.createObjectURL(svgSheetBlob);
+}
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -42,9 +47,6 @@ export class SvgIcon extends HTMLElement {
   }
 
   private static src() {
-    if (!svgSheetUrl && _svgSheetBlob_ instanceof Blob)
-      svgSheetUrl = URL.createObjectURL(_svgSheetBlob_);
-
     return svgSheetUrl;
   }
 

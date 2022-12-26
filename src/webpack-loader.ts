@@ -14,7 +14,7 @@ export default async function (code: string) {
     return undefined;
   });
 
-  if (code) {
+  if (code && this.resource) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (isSheetImport(this.resource)) {
