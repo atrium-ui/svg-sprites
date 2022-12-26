@@ -7,10 +7,19 @@ export default function svgSprite(
 ): PluginOption {
   const svg = getSheet(options);
 
+  let componentImportId: string | null;
+
   return {
     name: "svg-sprite",
 
     async resolveId(source, importer, options) {
+      if (isComponentImport(source)) {
+        const resolved = await this.resolve(source, importer, { skipSelf: true, ...options });
+        if (resolved && !resolved.external) {
+          componentImportId = resolved ? resolved.id : null;
+          return componentImportId;
+        }
+      }
       if (isSheetImport(source)) {
         return source;
       }
@@ -23,7 +32,7 @@ export default function svgSprite(
     },
 
     async transform(code, id) {
-      if (isComponentImport(id)) {
+      if (isComponentImport(id) || id === componentImportId) {
         return {
           code: code.replace(
             /"_svgSheetBlob_"/g,
