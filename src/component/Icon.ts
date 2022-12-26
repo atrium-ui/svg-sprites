@@ -1,5 +1,9 @@
 let svgSheetUrl = "";
-let _svgSheetBlob_: string | Blob = "_svgSheetBlob_";
+const _svgSheetBlob_: string | Blob = "_svgSheetBlob_";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+if (!globalThis.HTMLElement) globalThis.HTMLElement = class {};
 
 export class SvgIcon extends HTMLElement {
   static sheet?: CSSStyleSheet;
@@ -75,4 +79,4 @@ declare global {
   }
 }
 
-customElements.define("svg-icon", SvgIcon);
+if (globalThis.customElements) customElements.define("svg-icon", SvgIcon);

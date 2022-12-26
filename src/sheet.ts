@@ -16,7 +16,7 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
     ...options.svg,
   });
 
-  for (let entry of entries) {
+  for (const entry of entries) {
     spriter.add(entry, null, fs.readFileSync(entry, { encoding: "utf-8" }));
   }
 

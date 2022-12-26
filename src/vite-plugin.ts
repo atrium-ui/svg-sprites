@@ -1,6 +1,6 @@
 import type { PluginOption } from "vite";
 import { getSheet, SVGSpriteOptions } from "./sheet";
-import { isComponentImport, isSheetImport } from "./shared";
+import { isComponentImport, isSheetImport, createSheetCode, replacePlaceholder } from "./shared";
 
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }
@@ -28,17 +28,14 @@ export default function svgSprite(
 
     async load(id) {
       if (isSheetImport(id)) {
-        return `export default new Blob([\`${await svg}\`], { type: "image/svg+xml" });`;
+        return createSheetCode(await svg);
       }
     },
 
     async transform(code, id) {
       if (id === componentImportId) {
         return {
-          code: code.replace(
-            /"_svgSheetBlob_"/g,
-            `new Blob([\`${await svg}\`], { type: "image/svg+xml" });`
-          ),
+          code: replacePlaceholder(code, await svg),
         };
       }
       return null;
