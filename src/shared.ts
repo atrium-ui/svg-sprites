@@ -7,7 +7,7 @@ export function isComponentImport(source: string) {
 }
 
 export function isSheetImport(source: string) {
-  return source.match(moduleId + main);
+  return source.match(moduleId + "/" + main);
 }
 
 export function replacePlaceholder(code: string, svg: string) {
