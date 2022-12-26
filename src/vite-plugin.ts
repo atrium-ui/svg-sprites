@@ -11,6 +11,7 @@ export default function svgSprite(
 
   return {
     name: "svg-sprite",
+    enforce: "pre",
 
     async resolveId(source, importer, options) {
       if (isComponentImport(source)) {
@@ -32,7 +33,7 @@ export default function svgSprite(
     },
 
     async transform(code, id) {
-      if (isComponentImport(id) || id === componentImportId) {
+      if (id === componentImportId) {
         return {
           code: code.replace(
             /"_svgSheetBlob_"/g,
