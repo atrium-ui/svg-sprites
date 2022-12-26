@@ -9,5 +9,5 @@
     "useDefineForClassFields": false,
     "resolveJsonModule": true
   },
-  "exclude": ["plugin", "component", "node_modules"]
+  "exclude": ["plugin", "component", "node_modules", "loader"]
 }

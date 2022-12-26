@@ -14,8 +14,9 @@ node_modules/
 # bundles
 **/*.bundle.js
 **/*.min.js
-component
-plugin
+/component
+/plugin
+/loader
 
 # tests
 dist

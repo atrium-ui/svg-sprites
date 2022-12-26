@@ -2,16 +2,19 @@
   "name": "@atrium-ui/vite-svg-sprite",
   "version": "0.2.24",
   "description": "",
-  "main": "dist/vite-svg-sprite.js",
+  "main": "sprite-sheet.js",
   "keywords": [],
-  "author": "",
+  "author": "Tim Havlicek",
   "license": "ISC",
   "scripts": {
-    "test": "vite build test/vite",
-    "build": "vite build && vite build -- --wp && vite build -- --vite",
+    "test": "vite build test/vite && webpack -c test/wp/webpack.config.js",
     "lint": "eslint --ext .js,.ts .",
+    "build": "vite build && vite build -- --wp && vite build -- --vite",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
+  "workspaces": [
+    "."
+  ],
   "dependencies": {
     "fast-glob": "^3.2.12",
     "svg-sprite": "^2.0.2"
@@ -19,6 +22,10 @@
   "devDependencies": {
     "@types/node": "^18.11.17",
     "@types/svg-sprite": "^0.0.34",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "eslint": "^8.30.0",
+    "typescript": "^4.9.4",
     "vite": "^4.0.3",
     "vite-plugin-dts": "^1.7.1",
     "webpack": "^5.75.0",

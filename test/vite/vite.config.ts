@@ -1,6 +1,9 @@
-import svgSprite from "vite-svg-sprite/plugin/vite";
+import path from "path";
+import svgSprite from "../../plugin/vite";
+
+const dir = path.resolve("./test/assets/icons/*.svg");
 
 export default {
   base: "",
-  plugins: [svgSprite({ dir: "test/assets/icons/*.svg" })],
+  plugins: [svgSprite({ dir })],
 };

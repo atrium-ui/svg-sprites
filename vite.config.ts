@@ -1,7 +1,7 @@
 import { defineConfig, UserConfig } from "vite";
 import dts from "vite-plugin-dts";
 
-const external = ["fs", "fast-glob", "svg-sprite", "svg:sheet"];
+const external = ["fs", "fast-glob", "svg-sprite", "webpack"];
 
 const common = {
   target: "ES2020",
@@ -19,9 +19,9 @@ const commontDts = {
 const webpackPlugin: UserConfig = {
   build: {
     ...common,
-    outDir: "plugin/webpack",
+    outDir: "loader",
     lib: {
-      entry: "src/wp-svg-sprite.ts",
+      entry: "src/webpack-loader.ts",
       formats: ["cjs", "es"],
       fileName: "index",
     },
@@ -34,7 +34,7 @@ const vitePlugin: UserConfig = {
     ...common,
     outDir: "plugin/vite",
     lib: {
-      entry: "src/vite-svg-sprite.ts",
+      entry: "src/vite-plugin.ts",
       formats: ["cjs", "es"],
       fileName: "index",
     },
@@ -47,7 +47,7 @@ const component: UserConfig = {
     ...common,
     outDir: "component",
     lib: {
-      entry: "src/Icon.ts",
+      entry: "src/component/Icon.ts",
       formats: ["cjs", "es"],
       fileName: "index",
     },

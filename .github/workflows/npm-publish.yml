@@ -19,6 +19,7 @@ jobs:
           version: 7.14.0
       - run: pnpm i 
       - run: pnpm build
+      - run: pnpm test
       - run: pnpm publish --access=public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

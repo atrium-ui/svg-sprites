@@ -7,7 +7,7 @@ export interface SVGSpriteOptions {
   svg?: SVGSpriter.Config;
 }
 
-export async function buildSprite(options: SVGSpriteOptions): Promise<string[]> {
+export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
   const entries = await fastGlob([options.dir]);
   const spriter = new SVGSpriter({
     mode: {
@@ -23,4 +23,11 @@ export async function buildSprite(options: SVGSpriteOptions): Promise<string[]> 
   const { result } = await spriter.compileAsync();
 
   return result.defs.sprite.contents.toString("utf8");
+}
+
+let sheetData: string | undefined;
+
+export async function getSheet(options: SVGSpriteOptions) {
+  if (!sheetData) sheetData = await buildSheet(options);
+  return sheetData;
 }
