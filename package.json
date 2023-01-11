@@ -7,19 +7,23 @@
   "exports": {
     ".": {
       "import": "./sprite-sheet.js",
-      "require": "./sprite-sheet.cjs"
+      "require": "./sprite-sheet.cjs",
+      "types": "./sprite-sheet.ts"
     },
-    "./component": {
-      "import": "./components/Icon.js",
-      "require": "./components/Icon.cjs"
+    "./svg-icon": {
+      "import": "./component/Icon.js",
+      "require": "./component/Icon.cjs",
+      "types": "./component/Icon.d.ts"
     },
     "./loader": {
       "import": "./loader/webpack-loader.js",
-      "require": "./loader/webpack-loader.cjs"
+      "require": "./loader/webpack-loader.cjs",
+      "types": "./loader/webpack-loader.d.ts"
     },
     "./vite": {
-      "import": "./plugin/viet-plugin.js",
-      "require": "./plugin/viet-plugin.cjs"
+      "import": "./plugin/vite-plugin.js",
+      "require": "./plugin/vite-plugin.cjs",
+      "types": "./plugin/viet-plugin.d.ts"
     }
   },
   "keywords": [],
