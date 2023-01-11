@@ -1,5 +1,5 @@
-import { getSheet, SVGSpriteOptions } from "./sheet";
-import { replacePlaceholder, isComponentImport, isSheetImport } from "./shared";
+import { getSheet, SVGSpriteOptions } from "../sheet";
+import { replacePlaceholder, isComponentImport, isSheetImport } from "../shared";
 
 export default async function (code: string) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
