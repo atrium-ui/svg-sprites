@@ -3,7 +3,25 @@
   "version": "0.3.5",
   "description": "",
   "main": "sprite-sheet.js",
-  "module": "sprite-sheet.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./sprite-sheet.js",
+      "require": "./sprite-sheet.cjs"
+    },
+    "./component": {
+      "import": "./components/Icon.js",
+      "require": "./components/Icon.cjs"
+    },
+    "./loader": {
+      "import": "./loader/webpack-loader.js",
+      "require": "./loader/webpack-loader.cjs"
+    },
+    "./vite": {
+      "import": "./plugin/viet-plugin.js",
+      "require": "./plugin/viet-plugin.cjs"
+    }
+  },
   "keywords": [],
   "author": "Tim Havlicek",
   "license": "ISC",
@@ -17,6 +35,7 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "dependencies": {
+    "@rollup/plugin-typescript": "^11.0.0",
     "fast-glob": "^3.2.12",
     "svg-sprite": "^2.0.2"
   },

@@ -1,50 +1,59 @@
 import { defineConfig, UserConfig } from "vite";
+import typescript from "@rollup/plugin-typescript";
 
 const external = ["fs", "fast-glob", "svg-sprite", "webpack"];
 
-const common = {
-  target: "ES2020",
-  emptyOutDir: true,
-  rollupOptions: {
-    external,
-  },
-};
-
-const webpackPlugin: UserConfig = {
-  build: {
-    ...common,
-    outDir: "loader",
-    lib: {
-      entry: "src/loader/webpack-loader.ts",
-      formats: ["cjs", "es"],
-      fileName: "index",
+function createBuildConfig(
+  name: string,
+  src: string,
+  root: string,
+  out: string
+): UserConfig {
+  return {
+    build: {
+      lib: {
+        entry: src,
+        formats: ["cjs", "es"],
+        name: name,
+        fileName: name,
+      },
+      emptyOutDir: true,
+      rollupOptions: {
+        external,
+        output: {
+          dir: out,
+        },
+        plugins: [
+          typescript({
+            rootDir: root,
+            outDir: out,
+          }),
+        ],
+      },
     },
-  },
-};
+  };
+}
 
-const vitePlugin: UserConfig = {
-  build: {
-    ...common,
-    outDir: "plugin/vite",
-    lib: {
-      entry: "src/plugin/vite-plugin.ts",
-      formats: ["cjs", "es"],
-      fileName: "index",
-    },
-  },
-};
+const webpackPlugin: UserConfig = createBuildConfig(
+  "webpack-loader",
+  "src/loader/webpack-loader.ts",
+  "src/loader",
+  "loader"
+);
 
-const component: UserConfig = {
-  build: {
-    ...common,
-    outDir: "component",
-    lib: {
-      entry: "src/component/Icon.ts",
-      formats: ["cjs", "es"],
-      fileName: "index",
-    },
-  },
-};
+const vitePlugin = createBuildConfig(
+  "vite-plugin",
+  "src/plugin/vite-plugin.ts",
+  "src/plugin",
+  "plugin"
+);
+
+const component = createBuildConfig(
+  "Icon",
+  "src/component/Icon.ts",
+  "src/component",
+  "component"
+);
 
 let config = component;
 if (process.argv.indexOf("--vite") !== -1) {
