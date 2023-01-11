@@ -1,5 +1,5 @@
-import "@atrium-ui/vite-svg-sprite/component";
-import { src } from "~svg-sprite";
+import "@atrium-ui/vite-svg-sprite/svg-icon";
+import { src } from "@atrium-ui/vite-svg-sprit";
 
 window.addEventListener("DOMContentLoaded", () => {
   console.log(src);

@@ -3,29 +3,32 @@
   "version": "0.4.1",
   "description": "",
   "main": "sprite-sheet.js",
-  "type": "module",
+  "module": "sprite-sheet.mjs",
   "exports": {
     ".": {
-      "import": "./sprite-sheet.js",
-      "require": "./sprite-sheet.cjs",
+      "import": "./sprite-sheet.mjs",
+      "require": "./sprite-sheet.js",
       "types": "./sprite-sheet.ts"
     },
     "./svg-icon": {
-      "import": "./component/Icon.js",
-      "require": "./component/Icon.cjs",
+      "import": "./component/Icon.mjs",
+      "require": "./component/Icon.js",
       "types": "./component/Icon.d.ts"
     },
     "./loader": {
-      "import": "./loader/webpack-loader.js",
-      "require": "./loader/webpack-loader.cjs",
+      "import": "./loader/webpack-loader.mjs",
+      "require": "./loader/webpack-loader.js",
       "types": "./loader/webpack-loader.d.ts"
     },
     "./vite": {
-      "import": "./plugin/vite-plugin.js",
-      "require": "./plugin/vite-plugin.cjs",
-      "types": "./plugin/viet-plugin.d.ts"
+      "import": "./plugin/vite-plugin.mjs",
+      "require": "./plugin/vite-plugin.js",
+      "types": "./plugin/vite-plugin.d.ts"
     }
   },
+  "workspaces": [
+    "."
+  ],
   "keywords": [],
   "author": "Tim Havlicek",
   "license": "ISC",

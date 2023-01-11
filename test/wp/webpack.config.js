@@ -3,11 +3,6 @@ const path = require("path");
 module.exports = {
   mode: "development",
   entry: path.resolve(__dirname, "./main.js"),
-  resolve: {
-    alias: {
-      "~svg-sprite": "@atrium-ui/vite-svg-sprite/sprite-sheet",
-    },
-  },
   module: {
     rules: [
       {
