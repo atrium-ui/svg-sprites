@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import fastGlob from "fast-glob";
 import SVGSpriter from "svg-sprite";
 

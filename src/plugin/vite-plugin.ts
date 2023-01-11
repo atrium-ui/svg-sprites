@@ -1,6 +1,6 @@
 import type { PluginOption } from "vite";
-import { getSheet, SVGSpriteOptions } from "./sheet";
-import { isComponentImport, isSheetImport, replacePlaceholder, createSheetCode } from "./shared";
+import { getSheet, SVGSpriteOptions } from "../sheet";
+import { isComponentImport, isSheetImport, replacePlaceholder, createSheetCode } from "../shared";
 
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }

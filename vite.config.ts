@@ -15,7 +15,7 @@ const webpackPlugin: UserConfig = {
     ...common,
     outDir: "loader",
     lib: {
-      entry: "src/webpack-loader.ts",
+      entry: "src/loader/webpack-loader.ts",
       formats: ["cjs", "es"],
       fileName: "index",
     },
@@ -27,7 +27,7 @@ const vitePlugin: UserConfig = {
     ...common,
     outDir: "plugin/vite",
     lib: {
-      entry: "src/vite-plugin.ts",
+      entry: "src/plugin/vite-plugin.ts",
       formats: ["cjs", "es"],
       fileName: "index",
     },

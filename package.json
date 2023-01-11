@@ -1,6 +1,6 @@
 {
   "name": "@atrium-ui/vite-svg-sprite",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "",
   "main": "sprite-sheet.js",
   "module": "sprite-sheet.js",
@@ -16,9 +16,6 @@
     "build:webpack": "vite build -- --wp",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
-  "workspaces": [
-    "."
-  ],
   "dependencies": {
     "fast-glob": "^3.2.12",
     "svg-sprite": "^2.0.2"
