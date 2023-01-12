@@ -3,11 +3,13 @@ import { getSheet, SVGSpriteOptions } from "../sheet";
 import { replacePlaceholder, createSheetCode } from "../shared";
 
 function isComponentImport(id: string) {
-  return id.match("vite-svg-sprite_svg-icon");
+  return (
+    id.match("vite-svg-sprite_svg-icon") || id.match("vite-svg-sprite/svg-icon")
+  );
 }
 
 function isSheetImport(id: string) {
-  return id.match("vite-svg-sprite_sheet");
+  return id.match("vite-svg-sprite_sheet") || id.match("vite-svg-sprite/sheet");
 }
 
 export default function svgSprite(
