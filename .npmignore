@@ -19,4 +19,5 @@ vite.config.ts
 .DS_Store
 
 # src
+src
 test

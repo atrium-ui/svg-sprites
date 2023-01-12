@@ -1,5 +1,3 @@
-import type { SvgIcon } from "./src/component/Icon";
-
 globalThis.Blob = globalThis.Blob || class {};
 
 export function blob() {
@@ -8,10 +6,4 @@ export function blob() {
 
 export function src() {
   return URL.createObjectURL(blob());
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    "svg-icon": SvgIcon;
-  }
 }

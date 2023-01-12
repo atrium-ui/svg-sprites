@@ -1,4 +1,3 @@
-// data placeholder
 globalThis.Blob = globalThis.Blob || class {};
 
 export function blob() {

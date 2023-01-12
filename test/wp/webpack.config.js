@@ -1,13 +1,8 @@
-const path = require("path");
+import path from "path";
 
-module.exports = {
+export default {
   mode: "development",
-  entry: path.resolve(__dirname, "./main.js"),
-  resolve: {
-    alias: {
-      "~svg-sprite": "@atrium-ui/vite-svg-sprite/sprite-sheet",
-    },
-  },
+  entry: path.resolve("./test/wp/main.js"),
   module: {
     rules: [
       {
@@ -24,6 +19,6 @@ module.exports = {
   },
   output: {
     filename: "main.bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve("./test/wp/dist"),
   },
 };

@@ -1,9 +1,35 @@
 {
   "name": "@atrium-ui/vite-svg-sprite",
-  "version": "0.3.5",
+  "version": "0.4.2",
   "description": "",
-  "main": "sprite-sheet.js",
+  "main": "sprite-sheet.cjs",
   "module": "sprite-sheet.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./sprite-sheet.js",
+      "require": "./sprite-sheet.cjs",
+      "types": "./sprite-sheet.ts"
+    },
+    "./svg-icon": {
+      "import": "./component/Icon.js",
+      "require": "./component/Icon.cjs",
+      "types": "./component/Icon.d.ts"
+    },
+    "./loader": {
+      "import": "./loader/webpack-loader.js",
+      "require": "./loader/webpack-loader.cjs",
+      "types": "./loader/webpack-loader.d.ts"
+    },
+    "./vite": {
+      "import": "./plugin/vite-plugin.js",
+      "require": "./plugin/vite-plugin.cjs",
+      "types": "./plugin/vite-plugin.d.ts"
+    }
+  },
+  "workspaces": [
+    "."
+  ],
   "keywords": [],
   "author": "Tim Havlicek",
   "license": "ISC",
@@ -21,6 +47,7 @@
     "svg-sprite": "^2.0.2"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.0.0",
     "@types/node": "^18.11.17",
     "@types/svg-sprite": "^0.0.34",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
