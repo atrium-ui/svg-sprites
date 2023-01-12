@@ -6,7 +6,7 @@
   "module": "sprite-sheet.js",
   "type": "module",
   "exports": {
-    ".": {
+    "./sheet": {
       "import": "./sprite-sheet.js",
       "require": "./sprite-sheet.cjs",
       "types": "./sprite-sheet.ts"

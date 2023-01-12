@@ -1,15 +1,3 @@
-import { main } from "../package.json";
-
-const moduleId = "vite-svg-sprite";
-
-export function isComponentImport(source: string) {
-  return source.match(moduleId + "/component");
-}
-
-export function isSheetImport(source: string) {
-  return source.match(moduleId + "/" + main);
-}
-
 export function replacePlaceholder(code: string, svg: string) {
   return code.replace(/\"_svgSheetString_\"/g, `\`${svg}\``);
 }
