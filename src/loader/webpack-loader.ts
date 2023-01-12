@@ -1,5 +1,13 @@
 import { getSheet, SVGSpriteOptions } from "../sheet";
-import { replacePlaceholder, isComponentImport, isSheetImport } from "../shared";
+import { replacePlaceholder } from "../shared";
+
+function isSheetImport(id: string) {
+  return id.match("sprite-sheet.js");
+}
+
+function isComponentImport(id: string) {
+  return id.match("component/Icon.js");
+}
 
 export default async function (code: string) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
