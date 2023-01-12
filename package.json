@@ -2,27 +2,28 @@
   "name": "@atrium-ui/vite-svg-sprite",
   "version": "0.4.1",
   "description": "",
-  "main": "sprite-sheet.js",
-  "module": "sprite-sheet.mjs",
+  "main": "sprite-sheet.cjs",
+  "module": "sprite-sheet.js",
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./sprite-sheet.mjs",
-      "require": "./sprite-sheet.js",
+      "import": "./sprite-sheet.js",
+      "require": "./sprite-sheet.cjs",
       "types": "./sprite-sheet.ts"
     },
     "./svg-icon": {
-      "import": "./component/Icon.mjs",
-      "require": "./component/Icon.js",
+      "import": "./component/Icon.js",
+      "require": "./component/Icon.cjs",
       "types": "./component/Icon.d.ts"
     },
     "./loader": {
-      "import": "./loader/webpack-loader.mjs",
-      "require": "./loader/webpack-loader.js",
+      "import": "./loader/webpack-loader.js",
+      "require": "./loader/webpack-loader.cjs",
       "types": "./loader/webpack-loader.d.ts"
     },
     "./vite": {
-      "import": "./plugin/vite-plugin.mjs",
-      "require": "./plugin/vite-plugin.js",
+      "import": "./plugin/vite-plugin.js",
+      "require": "./plugin/vite-plugin.cjs",
       "types": "./plugin/vite-plugin.d.ts"
     }
   },

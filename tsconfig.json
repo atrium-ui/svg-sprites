@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES2020",
+    "moduleResolution": "NodeNext",
     "strictNullChecks": true,
     "noImplicitAny": false,
-    "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "rootDir": "./src"
+    "declaration": true
   },
-  "exclude": ["node_modules", "dist", "test", "plugin", "component", "loader"]
+  "exclude": ["node_modules", "dist", "plugin", "component", "loader"]
 }
