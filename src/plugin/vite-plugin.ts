@@ -17,7 +17,7 @@ function isSheetImport(id: string) {
 }
 
 export default function svgSprite(
-  options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }
+  options: SVGSpriteOptions = { dir: "assets/icons/**/*.svg" }
 ): PluginOption {
   let svg: Promise<string>;
 

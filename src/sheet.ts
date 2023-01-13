@@ -29,7 +29,7 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
   const entries = await fastGlob([options.dir]);
   const spriter = new SVGSpriter({
     mode: {
-      defs: true, // Create a «defs» sprite
+      symbol: true,
     },
     shape: {
       id: {
@@ -37,6 +37,7 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
           return id.replace(/\.(.+)/g, "");
         },
       },
+      transform: ["svgo"],
     },
     ...options.svg,
   });
@@ -62,7 +63,7 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
     );
   }
 
-  return result.defs.sprite.contents.toString("utf8");
+  return result.symbol.sprite.contents.toString("utf8");
 }
 
 let sheetData: string | undefined;
