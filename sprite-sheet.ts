@@ -7,3 +7,7 @@ export function blob() {
 export function src() {
   return URL.createObjectURL(blob());
 }
+
+export function svg() {
+  return "";
+}

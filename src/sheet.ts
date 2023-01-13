@@ -17,6 +17,10 @@ export function createSheetCode(svg: string) {
     export function src() {
       return URL.createObjectURL(blob());
     }
+
+    export function svg() {
+      return \`${svg}\`;
+    }
   `;
 }
 
