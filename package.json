@@ -36,6 +36,7 @@
   "scripts": {
     "test": "vite build test/vite && webpack -c test/wp/webpack.config.js",
     "lint": "eslint --ext .js,.ts .",
+    "dev": "vite test/vite",
     "build": "npm run build:component & npm run build:vite & npm run build:webpack",
     "build:component": "vite build",
     "build:vite": "vite build -- --vite",

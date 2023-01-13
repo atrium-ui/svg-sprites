@@ -24,15 +24,18 @@ export class SvgIcon extends HTMLElement {
   static get styles() {
     return /*css*/ `
       :host {
-        margin: 0 2px;
-        display: inline-block;
+        margin: 0 2px 0.125em 2px;
         color: inherit;
-        vertical-align: sub;
-      }
-      svg {
-        display: block;
+        display: inline-block;
+        vertical-align: middle;
         width: 1em;
         height: 1em;
+      }
+
+      svg {
+        display: block;
+        width: 100%;
+        height: 100%;
       }
     `;
   }
