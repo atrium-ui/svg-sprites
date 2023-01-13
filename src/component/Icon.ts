@@ -1,22 +1,44 @@
 let svgSheetUrl = "";
 let svgSheetBlob: Blob;
+let supportsAdoptingStyleSheets = true;
 
 if (typeof window !== "undefined") {
   svgSheetBlob = new Blob(["_svgSheetString_"], { type: "image/svg+xml" });
   svgSheetUrl = URL.createObjectURL(svgSheetBlob);
+
+  supportsAdoptingStyleSheets =
+    globalThis.ShadowRoot &&
+    "adoptedStyleSheets" in Document.prototype &&
+    "replace" in CSSStyleSheet.prototype;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-if (!globalThis.HTMLElement) globalThis.HTMLElement = class {};
+if (!("HTMLElement" in globalThis)) globalThis.HTMLElement = class {};
 
 export class SvgIcon extends HTMLElement {
   static sheet?: CSSStyleSheet;
 
+  static get styles() {
+    return /*css*/ `
+      :host {
+        margin: 0 2px;
+        display: inline-block;
+        color: inherit;
+        vertical-align: sub;
+      }
+      svg {
+        display: block;
+        width: 1em;
+        height: 1em;
+      }
+    `;
+  }
+
   static getStyleSheet(): CSSStyleSheet {
     if (!SvgIcon.sheet) {
       const sheet = new CSSStyleSheet();
-      sheet.replaceSync(this.styles);
+      sheet.replaceSync(SvgIcon.styles);
       SvgIcon.sheet = sheet;
     }
     return SvgIcon.sheet;
@@ -33,7 +55,13 @@ export class SvgIcon extends HTMLElement {
   connectedCallback(): void {
     if (!this.shadowRoot) {
       const shadow = this.attachShadow({ mode: "open" });
-      shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
+      if (supportsAdoptingStyleSheets) {
+        shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
+      } else {
+        const style = document.createElement("style");
+        style.textContent = SvgIcon.styles;
+        shadow.appendChild(style);
+      }
       this.update();
     }
   }
@@ -46,32 +74,11 @@ export class SvgIcon extends HTMLElement {
     if (icon !== null) this.setAttribute("icon", icon);
   }
 
-  private static src() {
-    return svgSheetUrl;
-  }
-
-  private static get styles(): string {
-    return /*css*/ `
-      :host {
-        margin: 0 2px;
-        display: inline-block;
-        color: inherit;
-        vertical-align: sub;
-      }
-      svg {
-        display: block;
-        width: 1em;
-        height: 1em;
-      }
-    `;
-  }
-
   private update() {
-    this.shadowRoot
-      ? (this.shadowRoot.innerHTML = `
-      <svg><use xlink:href="${SvgIcon.src()}${"#" + this.icon}"></use></svg>
-    `)
-      : null;
+    this.shadowRoot &&
+      (this.shadowRoot.innerHTML = `
+      <svg><use xlink:href="${svgSheetUrl}${"#" + this.icon}"></use></svg>
+    `);
   }
 }
 
@@ -81,4 +88,4 @@ declare global {
   }
 }
 
-if (globalThis.customElements) customElements.define("svg-icon", SvgIcon);
+if ("customElements" in globalThis) customElements.define("svg-icon", SvgIcon);
