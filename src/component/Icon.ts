@@ -6,6 +6,30 @@ if (typeof window !== "undefined") {
   svgSheetBlob = new Blob(["_svgSheetString_"], { type: "image/svg+xml" });
   svgSheetUrl = URL.createObjectURL(svgSheetBlob);
 
+  document.head.innerHTML += `
+    <style>
+      svg-icon {
+        margin: 0 2px 0.1em 2px;
+        color: inherit;
+        display: inline-block;
+        vertical-align: middle;
+        aspect-ratio: 1 / 1;
+        width: 1em;
+        height: 1em;
+      }
+      svg-icon svg {
+        display: block;
+      }
+    </style>
+  `;
+
+  const writeSheet = async () => {
+    const svg = await svgSheetBlob.text();
+    document.head.innerHTML += svg;
+  };
+
+  writeSheet();
+
   supportsAdoptingStyleSheets =
     globalThis.ShadowRoot &&
     "adoptedStyleSheets" in Document.prototype &&
@@ -60,17 +84,17 @@ export class SvgIcon extends HTMLElement {
 
   connectedCallback(): void {
     if (!this.shadowRoot) {
-      const shadow = this.attachShadow({ mode: "open" });
+      // const shadow = this.attachShadow({ mode: "open" });
+      this.innerHTML = `<svg width="100%" height="100%">${this.render()}</svg>`;
+      this.svg = this.querySelector("svg");
 
-      shadow.innerHTML = `<svg>${this.render()}</svg>`;
-
-      if (supportsAdoptingStyleSheets) {
-        shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
-      } else {
-        const style = document.createElement("style");
-        style.textContent = SvgIcon.styles;
-        shadow.appendChild(style);
-      }
+      // if (supportsAdoptingStyleSheets) {
+      //   shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
+      // } else {
+      //   const style = document.createElement("style");
+      //   style.textContent = SvgIcon.styles;
+      //   shadow.appendChild(style);
+      // }
     }
   }
 
@@ -83,12 +107,11 @@ export class SvgIcon extends HTMLElement {
   }
 
   private update() {
-    if (!this.svg) this.svg = this.shadowRoot?.querySelector("svg");
     this.svg && (this.svg.innerHTML = this.render());
   }
 
   private render() {
-    return `<use xlink:href="${svgSheetUrl}${"#" + this.icon}"></use>`;
+    return `<use xlink:href="${"#" + this.icon}"></use>`;
   }
 }
 
