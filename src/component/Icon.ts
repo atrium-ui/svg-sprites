@@ -20,6 +20,7 @@ export class SvgIcon extends HTMLElement {
   static sheet?: CSSStyleSheet;
 
   private svg?: SVGElement | null;
+  private use?: SVGUseElement | null;
 
   static get styles() {
     return /*css*/ `
@@ -35,8 +36,8 @@ export class SvgIcon extends HTMLElement {
 
       svg {
         display: block;
-        width: 100%;
-        height: 100%;
+        width: inherit;
+        height: inherit;
       }
     `;
   }
@@ -54,26 +55,6 @@ export class SvgIcon extends HTMLElement {
     return ["icon"];
   }
 
-  attributeChangedCallback(): void {
-    this.update();
-  }
-
-  connectedCallback(): void {
-    if (!this.shadowRoot) {
-      const shadow = this.attachShadow({ mode: "open" });
-
-      shadow.innerHTML = `<svg>${this.render()}</svg>`;
-
-      if (supportsAdoptingStyleSheets) {
-        shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
-      } else {
-        const style = document.createElement("style");
-        style.textContent = SvgIcon.styles;
-        shadow.appendChild(style);
-      }
-    }
-  }
-
   public get icon(): string | null {
     return this.getAttribute("icon");
   }
@@ -83,12 +64,31 @@ export class SvgIcon extends HTMLElement {
   }
 
   private update() {
-    if (!this.svg) this.svg = this.shadowRoot?.querySelector("svg");
-    this.svg && (this.svg.innerHTML = this.render());
+    this.use && this.use.setAttribute("href", svgSheetUrl + "#" + this.icon);
   }
 
-  private render() {
-    return `<use xlink:href="${svgSheetUrl}${"#" + this.icon}"></use>`;
+  attributeChangedCallback(): void {
+    this.update();
+  }
+
+  constructor() {
+    super();
+
+    const shadow = this.attachShadow({ mode: "open" });
+
+    this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    this.use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+
+    this.svg.append(this.use);
+    shadow.append(this.svg);
+
+    if (supportsAdoptingStyleSheets) {
+      shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
+    } else {
+      const style = document.createElement("style");
+      style.textContent = SvgIcon.styles;
+      shadow.appendChild(style);
+    }
   }
 }
 
