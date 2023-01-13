@@ -1,6 +1,10 @@
 import type { PluginOption } from "vite";
-import { getSheet, SVGSpriteOptions } from "../sheet";
-import { replacePlaceholder, createSheetCode } from "../shared";
+import {
+  getSheet,
+  SVGSpriteOptions,
+  replacePlaceholder,
+  createSheetCode,
+} from "../sheet.js";
 
 function isComponentImport(id: string) {
   return (
@@ -15,13 +19,17 @@ function isSheetImport(id: string) {
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: "assets/icons/*.svg" }
 ): PluginOption {
-  const svg = getSheet(options);
+  let svg: Promise<string>;
 
   let componentImportId: string | null;
 
   return {
     name: "vite-svg-sprite",
     enforce: "pre",
+
+    async buildStart() {
+      svg = getSheet(options);
+    },
 
     async resolveId(source, importer, options) {
       if (isComponentImport(source)) {
@@ -35,12 +43,8 @@ export default function svgSprite(
         }
       }
 
-      if (isSheetImport(source)) {
+      if (isSheetImport(source) || source === "~svg-sprite") {
         return "~svg-sprite";
-      }
-
-      if (source === "~svg-sprite") {
-        return source;
       }
     },
 

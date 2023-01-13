@@ -2,7 +2,7 @@
   "name": "@atrium-ui/vite-svg-sprite",
   "version": "0.4.6",
   "description": "",
-  "main": "sprite-sheet.cjs",
+  "main": "sprite-sheet.js",
   "module": "sprite-sheet.js",
   "type": "module",
   "exports": {

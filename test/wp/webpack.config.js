@@ -1,5 +1,7 @@
 import path from "path";
 
+const dir = path.resolve("./test/assets/icons/**/*.svg");
+
 export default {
   mode: "development",
   entry: path.resolve("./test/wp/main.js"),
@@ -10,7 +12,7 @@ export default {
           {
             loader: "@atrium-ui/vite-svg-sprite/loader",
             options: {
-              dir: "./test/assets/icons/*.svg",
+              dir,
             },
           },
         ],

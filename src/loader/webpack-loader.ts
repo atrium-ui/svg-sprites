@@ -1,5 +1,4 @@
-import { getSheet, SVGSpriteOptions } from "../sheet";
-import { replacePlaceholder } from "../shared";
+import { getSheet, SVGSpriteOptions, replacePlaceholder } from "../sheet.js";
 
 function isSheetImport(id: string) {
   return id.match("sprite-sheet.js");
