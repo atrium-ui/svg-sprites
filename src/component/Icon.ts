@@ -19,6 +19,8 @@ if (!("HTMLElement" in globalThis)) globalThis.HTMLElement = class {};
 export class SvgIcon extends HTMLElement {
   static sheet?: CSSStyleSheet;
 
+  private svg?: SVGElement | null;
+
   static get styles() {
     return /*css*/ `
       :host {
@@ -55,6 +57,9 @@ export class SvgIcon extends HTMLElement {
   connectedCallback(): void {
     if (!this.shadowRoot) {
       const shadow = this.attachShadow({ mode: "open" });
+
+      shadow.innerHTML = `<svg>${this.render()}</svg>`;
+
       if (supportsAdoptingStyleSheets) {
         shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
       } else {
@@ -62,7 +67,6 @@ export class SvgIcon extends HTMLElement {
         style.textContent = SvgIcon.styles;
         shadow.appendChild(style);
       }
-      this.update();
     }
   }
 
@@ -75,10 +79,12 @@ export class SvgIcon extends HTMLElement {
   }
 
   private update() {
-    this.shadowRoot &&
-      (this.shadowRoot.innerHTML = `
-      <svg><use xlink:href="${svgSheetUrl}${"#" + this.icon}"></use></svg>
-    `);
+    if (!this.svg) this.svg = this.shadowRoot?.querySelector("svg");
+    this.svg && (this.svg.innerHTML = this.render());
+  }
+
+  private render() {
+    return `<use xlink:href="${svgSheetUrl}${"#" + this.icon}"></use>`;
   }
 }
 
