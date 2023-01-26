@@ -16,6 +16,8 @@ if (typeof window !== "undefined") {
 // @ts-ignore
 if (!("HTMLElement" in globalThis)) globalThis.HTMLElement = class {};
 
+// TODO: width, height, size attributes
+
 export class SvgIcon extends HTMLElement {
   static sheet?: CSSStyleSheet;
 
@@ -63,8 +65,46 @@ export class SvgIcon extends HTMLElement {
     if (icon !== null) this.setAttribute("icon", icon);
   }
 
+  public get width(): string | null {
+    return this.getAttribute("width");
+  }
+
+  public set width(width: string | null) {
+    if (width !== null) this.setAttribute("width", width);
+  }
+
+  public get height(): string | null {
+    return this.getAttribute("height");
+  }
+
+  public set height(height: string | null) {
+    if (height !== null) this.setAttribute("height", height);
+  }
+
+  public get size(): string | null {
+    return this.getAttribute("size");
+  }
+
+  public set size(size: string | null) {
+    if (size !== null) this.setAttribute("size", size);
+  }
+
   private update() {
-    this.use && this.use.setAttribute("href", svgSheetUrl + "#" + this.icon);
+    const size = this.size;
+    if (size) {
+      this.svg?.setAttribute("width", size);
+      this.svg?.setAttribute("height", size);
+    } else {
+      this.svg?.setAttribute("width", this.width || "");
+      this.svg?.setAttribute("height", this.height || "");
+    }
+
+    this.use &&
+      this.use.setAttributeNS(
+        "http://www.w3.org/1999/xlink",
+        "xlink:href",
+        svgSheetUrl + "#" + this.icon
+      );
   }
 
   attributeChangedCallback(): void {
@@ -78,6 +118,13 @@ export class SvgIcon extends HTMLElement {
 
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+
+    this.svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    this.svg.setAttributeNS(
+      "http://www.w3.org/2000/svg",
+      "xmlns:xlink",
+      "http://www.w3.org/1999/xlink"
+    );
 
     this.svg.append(this.use);
     shadow.append(this.svg);

@@ -12,19 +12,19 @@
       "types": "./sprite-sheet.ts"
     },
     "./svg-icon": {
-      "import": "./component/Icon.js",
-      "require": "./component/Icon.cjs",
-      "types": "./component/Icon.d.ts"
+      "import": "./lib/Icon.js",
+      "require": "./lib/Icon.cjs",
+      "types": "./lib/Icon.d.ts"
     },
     "./loader": {
-      "import": "./loader/webpack-loader.js",
-      "require": "./loader/webpack-loader.cjs",
-      "types": "./loader/webpack-loader.d.ts"
+      "import": "./lib/webpack-loader.js",
+      "require": "./lib/webpack-loader.cjs",
+      "types": "./lib/webpack-loader.d.ts"
     },
     "./vite": {
-      "import": "./plugin/vite-plugin.js",
-      "require": "./plugin/vite-plugin.cjs",
-      "types": "./plugin/vite-plugin.d.ts"
+      "import": "./lib/vite-plugin.js",
+      "require": "./lib/vite-plugin.cjs",
+      "types": "./lib/vite-plugin.d.ts"
     }
   },
   "workspaces": [
@@ -35,20 +35,20 @@
   "license": "ISC",
   "scripts": {
     "test": "vite build test/vite && webpack -c test/wp/webpack.config.js",
-    "lint": "eslint --ext .js,.ts .",
-    "dev": "vite test/vite",
-    "build": "npm run build:component & npm run build:vite & npm run build:webpack",
-    "build:component": "vite build",
-    "build:vite": "vite build -- --vite",
-    "build:webpack": "vite build -- --wp",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+    "test:vite": "vite test/vite",
+    "test:webpack": "webpack watch -c test/wp/webpack.config.js",
+    "build": "npm run build:component && npm run build:vite && npm run build:webpack",
+    "build:component": "tsup src/component/Icon.ts -d lib --format esm,cjs --dts",
+    "build:vite": "tsup src/plugin/vite-plugin.ts -d lib --format esm,cjs --dts",
+    "build:webpack": "tsup src/loader/webpack-loader.ts -d lib --format esm,cjs --dts",
+    "lint": "eslint --ext .ts src"
   },
   "dependencies": {
     "fast-glob": "^3.2.12",
     "svg-sprite": "^2.0.2"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.0.0",
+    "tsup": "^6.5.0",
     "@types/node": "^18.11.17",
     "@types/svg-sprite": "^0.0.34",
     "@typescript-eslint/eslint-plugin": "^5.47.0",

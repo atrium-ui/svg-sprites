@@ -1,15 +1,8 @@
 import type { PluginOption } from "vite";
-import {
-  getSheet,
-  SVGSpriteOptions,
-  replacePlaceholder,
-  createSheetCode,
-} from "../sheet.js";
+import { getSheet, SVGSpriteOptions, replacePlaceholder, createSheetCode } from "../sheet.js";
 
 function isComponentImport(id: string) {
-  return (
-    id.match("vite-svg-sprite_svg-icon") || id.match("vite-svg-sprite/svg-icon")
-  );
+  return id.match("vite-svg-sprite_svg-icon") || id.match("vite-svg-sprite/svg-icon");
 }
 
 function isSheetImport(id: string) {
