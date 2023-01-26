@@ -1,4 +1,4 @@
-import { getSheet, SVGSpriteOptions, replacePlaceholder } from "../sheet.js";
+import { getSheet, SVGSpriteOptions, createSheetCode, replacePlaceholder } from "../sheet.js";
 
 function isSheetImport(id: string) {
   return id.match("sprite-sheet.js");
@@ -27,7 +27,7 @@ export default async function (code: string) {
     if (isSheetImport(this.resource)) {
       const source = await svg;
       if (source) {
-        return callback(null, replacePlaceholder(code, source));
+        return callback(null, createSheetCode(source));
       }
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

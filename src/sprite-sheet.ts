@@ -1,3 +1,5 @@
+import { getSheet } from "./sheet.js";
+
 globalThis.Blob = globalThis.Blob || class {};
 
 export function blob() {
@@ -8,6 +10,6 @@ export function src() {
   return URL.createObjectURL(blob());
 }
 
-export function svg() {
-  return "";
+export function svg(options = { dir: "assets/icons/**/*.svg" }): Promise<string> | string {
+  return getSheet(options);
 }
