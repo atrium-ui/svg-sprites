@@ -14,6 +14,7 @@ rollup.config.js
 .prettierrc
 .npmrc
 vite.config.ts
+.eslintrc.json
 
 # other
 .DS_Store
@@ -21,3 +22,5 @@ vite.config.ts
 # src
 src
 test
+
+TODO
