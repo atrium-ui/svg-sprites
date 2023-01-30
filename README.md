@@ -8,7 +8,6 @@ Includes a CustomElement that makes it easy to use any icon.
 <svg-icon icon="speaker" />
 ```
 
-Not just Icons. Use src for any SVG content.
 Or SSR the SVG symbols into the page.
 
 ```typescript
@@ -37,7 +36,6 @@ export default {
   ],
 };
 ```
-
 
 ## Next / Webpack configuration
 
