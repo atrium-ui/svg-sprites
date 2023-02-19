@@ -10,7 +10,7 @@ export default {
       {
         use: [
           {
-            loader: "@atrium-ui/vite-svg-sprite/loader",
+            loader: "svg-sprites/loader",
             options: {
               dir,
             },

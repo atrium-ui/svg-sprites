@@ -46,7 +46,7 @@ module.exports = {
     config.module.rules.push({
       use: [
         {
-          loader: "@atrium-ui/vite-svg-sprite/loader",
+          loader: "svg-sprites/loader",
           options: {
             dir: "./assets/icons/*.svg",
           },

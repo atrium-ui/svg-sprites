@@ -1,8 +1,7 @@
-import "@atrium-ui/vite-svg-sprite/svg-icon";
-import { src, svg, blob } from "@atrium-ui/vite-svg-sprite/sheet";
+import "svg-sprites/svg-icon";
+import { svg, blob } from "svg-sprites/sheet";
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
   console.log(svg());
   console.log(blob());
-  console.log(src());
 });

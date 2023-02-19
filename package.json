@@ -27,6 +27,9 @@
       "types": "./lib/vite-plugin.d.ts"
     }
   },
+  "workspaces": [
+    "./"
+  ],
   "keywords": [],
   "author": "Tim Havlicek",
   "license": "ISC",

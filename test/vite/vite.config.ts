@@ -1,5 +1,5 @@
 import path from "path";
-import svgSprite from "@atrium-ui/vite-svg-sprite/vite";
+import svgSprite from "svg-sprites/vite";
 
 const dir = path.resolve("./test/assets/icons/**/*.svg");
 
