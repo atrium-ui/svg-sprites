@@ -17,6 +17,7 @@ node_modules/
 /component
 /plugin
 /loader
+lib
 
 # tests
 dist

@@ -8,14 +8,10 @@ export function replacePlaceholder(code: string, svg: string) {
 
 export function createSheetCode(svg: string) {
   return `
-    globalThis.Blob = globalThis.Blob || class {};
+    const Blob = globalThis.Blob || class {};
 
     export function blob() {
-      return new globalThis.Blob([\`${svg}\`], { type: "image/svg+xml" });
-    }
-
-    export function src() {
-      return URL.createObjectURL(blob());
+      return new Blob([\`${svg}\`], { type: "image/svg+xml" });
     }
 
     export function svg() {
@@ -51,20 +47,13 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
   for (const entry of entries) {
     const relativePath = entry.replace(rootDir + "/", "");
 
-    spriter.add(
-      entry,
-      relativePath,
-      fs.readFileSync(entry, { encoding: "utf-8" })
-    );
+    spriter.add(entry, relativePath, fs.readFileSync(entry, { encoding: "utf-8" }));
   }
 
   const { result } = await spriter.compileAsync();
 
   if (process.env.EXPORT_SVG_SPRITE) {
-    fs.writeFileSync(
-      "./sprite.svg",
-      result.defs.sprite.contents.toString("utf8")
-    );
+    fs.writeFileSync("./sprite.svg", result.defs.sprite.contents.toString("utf8"));
   }
 
   return result.symbol.sprite.contents.toString("utf8");

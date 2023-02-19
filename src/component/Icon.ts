@@ -95,14 +95,18 @@ export class SvgIcon extends HTMLElement {
       this.svg?.setAttribute("width", size);
       this.svg?.setAttribute("height", size);
     } else {
-      this.svg?.setAttribute("width", this.width || "");
-      this.svg?.setAttribute("height", this.height || "");
+      if (this.width) {
+        this.svg?.setAttribute("width", this.width);
+      }
+      if (this.height) {
+        this.svg?.setAttribute("height", this.height);
+      }
     }
 
     this.use &&
       this.use.setAttributeNS(
         "http://www.w3.org/1999/xlink",
-        "xlink:href",
+        "href",
         svgSheetUrl + "#" + this.icon
       );
   }
@@ -120,11 +124,7 @@ export class SvgIcon extends HTMLElement {
     this.use = document.createElementNS("http://www.w3.org/2000/svg", "use");
 
     this.svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    this.svg.setAttributeNS(
-      "http://www.w3.org/2000/svg",
-      "xmlns:xlink",
-      "http://www.w3.org/1999/xlink"
-    );
+    this.svg.setAttributeNS("http://www.w3.org/2000/svg", "xlink", "http://www.w3.org/1999/xlink");
 
     this.svg.append(this.use);
     shadow.append(this.svg);

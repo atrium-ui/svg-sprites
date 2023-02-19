@@ -2,11 +2,13 @@ import type { PluginOption } from "vite";
 import { getSheet, SVGSpriteOptions, replacePlaceholder, createSheetCode } from "../sheet.js";
 
 function isComponentImport(id: string) {
-  return id.match("vite-svg-sprite_svg-icon") || id.match("vite-svg-sprite/svg-icon");
+  return id.match("svg-sprites_svg-icon") || id.match("svg-sprites/svg-icon");
 }
 
 function isSheetImport(id: string) {
-  return id.match("vite-svg-sprite_sheet") || id.match("vite-svg-sprite/sheet");
+  return (
+    id.match("svg-sprites_sheet") || id.match("svg-sprites/sheet") || id === "svg-sprites:sheet"
+  );
 }
 
 export default function svgSprite(
@@ -17,7 +19,7 @@ export default function svgSprite(
   let componentImportId: string | null;
 
   return {
-    name: "vite-svg-sprite",
+    name: "svg-sprites",
     enforce: "pre",
 
     async buildStart() {
@@ -36,13 +38,13 @@ export default function svgSprite(
         }
       }
 
-      if (isSheetImport(source) || source === "~svg-sprite") {
-        return "~svg-sprite";
+      if (isSheetImport(source)) {
+        return "svg-sprites:sheet";
       }
     },
 
     async load(id) {
-      if (id === "~svg-sprite") {
+      if (isSheetImport(id)) {
         return createSheetCode(await svg);
       }
     },

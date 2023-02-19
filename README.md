@@ -1,30 +1,41 @@
-# vite-svg-sprite
+# svg-sprites
 
-Compile svgs in a directory to a spritesheet and make it available as inlined blob url.
+Compile svgs in a directory to a spritesheet and make it available as text or blob.
+
 Includes a CustomElement that makes it easy to use any icon.
-
-Not just Icons. Use src for any SVG content.
 
 ```html
 <svg-icon icon="speaker" />
 ```
 
-## Install
+Or SSR the SVG symbols into the page.
 
-`npm install @atrium-ui/vite-svg-sprite`
+```typescript
+import { svg } from 'svg-sprites/sheet';
+```
+
+```html
+// nuxt
+<template>
+  <NuxtLayout name="default">
+    <div style="display: none" v-html="svgIcons"></div>
+
+    <NuxtPage />
+  </NuxtLayout>
+</template>
+```
 
 ## Vite configuration
 
 ```typescript
-import svgSprite from "@atrium-ui/vite-svg-sprite/plugin/vite";
+import svgSprite from "svg-sprites/vite";
 
 export default {
   plugins: [
-    svgSprite({ dir: "src/assets/icons/*.svg" }),
+    svgSprite({ dir: "assets/icons/*.svg" }),
   ],
 };
 ```
-
 
 ## Next / Webpack configuration
 
@@ -50,13 +61,11 @@ module.exports = {
 
 ## Component Usage
 
-Place your SVG files in a directory of choice, by default `/assets/icons/*.svg`.
-
+Place your SVG files in a directory of choice, by default `/assets/icons/**/*.svg`.
 
 ```typescript
 // import component
-import "@atrium-ui/vite-svg-sprite/component";
-
+import "svg-sprites/svg-icon";
 // ...
 ```
 
