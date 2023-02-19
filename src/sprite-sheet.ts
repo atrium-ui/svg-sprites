@@ -13,3 +13,7 @@ export function src() {
 export function svg(options = { dir: "assets/icons/**/*.svg" }): Promise<string> | string {
   return getSheet(options);
 }
+
+export function raw(): string {
+  return "_svgSheetString_";
+}
