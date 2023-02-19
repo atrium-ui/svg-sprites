@@ -6,7 +6,9 @@ function isComponentImport(id: string) {
 }
 
 function isSheetImport(id: string) {
-  return id.match("svg-sprites_sheet") || id.match("svg-sprites/sheet") || id === "~svg-sprite";
+  return (
+    id.match("svg-sprites_sheet") || id.match("svg-sprites/sheet") || id === "svg-sprites:sheet"
+  );
 }
 
 export default function svgSprite(
@@ -37,7 +39,7 @@ export default function svgSprite(
       }
 
       if (isSheetImport(source)) {
-        return "~svg-sprite";
+        return "svg-sprites:sheet";
       }
     },
 
