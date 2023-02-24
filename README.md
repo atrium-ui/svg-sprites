@@ -75,3 +75,8 @@ import "svg-sprites/svg-icon";
   <svg-icon icon="speaker" />
 </body>
 ```
+
+
+## Features/Issues TODO:
+- replace string, for replacing a hex color with currentColor for example.
+- make sure globs use the correct cwd
