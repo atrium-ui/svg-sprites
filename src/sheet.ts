@@ -42,9 +42,10 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
     ...options.svg,
   });
 
-  const rootDir = options.dir.replace(/(\/(\*+))+\.(.+)/g, "");
+  const rootDirs = options.dir.map((p) => p.replace(/(\/(\*+))+\.(.+)/g, ""));
 
   for (const entry of entries) {
+    const rootDir = rootDirs.find((dir) => entry.match(dir + "/"));
     const relativePath = entry.replace(rootDir + "/", "");
 
     spriter.add(entry, relativePath, fs.readFileSync(entry, { encoding: "utf-8" }));

@@ -34,7 +34,7 @@
   "author": "Tim Havlicek",
   "license": "ISC",
   "scripts": {
-    "test": "vite build test/vite && webpack -c test/wp/webpack.config.js",
+    "test": "vite build test/vite",
     "test:vite": "vite test/vite",
     "test:webpack": "webpack watch -c test/wp/webpack.config.js",
     "build": "npm run build:main && npm run build:component && npm run build:vite && npm run build:webpack",

@@ -1,6 +1,7 @@
 import path from "path";
 
-const dir = path.resolve("./test/assets/icons/**/*.svg");
+const dir1 = path.resolve("./test/assets/icons/**/*.svg");
+const dir2 = path.resolve("./test/assets/icons2/*.svg");
 
 export default {
   mode: "development",
@@ -12,7 +13,7 @@ export default {
           {
             loader: "svg-sprites/loader",
             options: {
-              dir,
+              dir: [dir1, dir2],
             },
           },
         ],

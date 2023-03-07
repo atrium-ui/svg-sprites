@@ -12,6 +12,7 @@ export default async function (code: string) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const options: SVGSpriteOptions = this.getOptions();
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const callback = this.async();

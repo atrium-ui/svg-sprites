@@ -1,9 +1,10 @@
 import path from "path";
 import svgSprite from "svg-sprites/vite";
 
-const dir = path.resolve("./test/assets/icons/**/*.svg");
+const dir1 = path.resolve("./test/assets/icons/**/*.svg");
+const dir2 = path.resolve("./test/assets/icons2/*.svg");
 
 export default {
   base: "",
-  plugins: [svgSprite({ dir })],
+  plugins: [svgSprite({ dir: [dir1, dir2] })],
 };
