@@ -80,3 +80,5 @@ import "svg-sprites/svg-icon";
 ## Features/Issues TODO:
 - replace string, for replacing a hex color with currentColor for example.
 - make sure globs use the correct cwd
+- provide an export with a Map of all the symbols to use in JS
+- import svg as jsx component?

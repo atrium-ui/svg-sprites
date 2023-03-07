@@ -21,12 +21,12 @@ export function createSheetCode(svg: string) {
 }
 
 export interface SVGSpriteOptions {
-  dir: string;
+  dir: string[];
   svg?: SVGSpriter.Config;
 }
 
 export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
-  const entries = await fastGlob([options.dir]);
+  const entries = await fastGlob(options.dir);
   const spriter = new SVGSpriter({
     mode: {
       symbol: true,
