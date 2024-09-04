@@ -1,6 +1,6 @@
 {
   "name": "svg-sprites",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "",
   "main": "lib/sprite-sheet.js",
   "module": "lib/sprite-sheet.js",
@@ -27,7 +27,9 @@
       "types": "./lib/vite-plugin.d.ts"
     }
   },
-  "workspaces": ["./"],
+  "workspaces": [
+    "./"
+  ],
   "keywords": [],
   "author": "Tim Havlicek",
   "license": "ISC",
