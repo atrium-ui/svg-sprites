@@ -56,7 +56,7 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
     const rootDir = rootDirs.find((dir) => entry.match(`${dir}/`));
     const name = entry.replace(`${rootDir}/`, "");
 
-    types.push(name);
+    types.push(path.basename(name, path.extname(name)));
 
     spriter.add(entry, name, fs.readFileSync(entry, { encoding: "utf-8" }));
   }
