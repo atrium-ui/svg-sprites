@@ -63,7 +63,7 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
 
   // generate types
   try {
-    const typesCode = `export type SvgIconName = ${types.map((t) => `"${t}"`).join(" | ")};`;
+    const typesCode = `type SvgIconName = ${types.map((t) => `"${t}"`).join(" | ")};`;
 
     writeFile("./node_modules/.svg-sprites/types.d.ts", typesCode);
   } catch (e) {
