@@ -1,4 +1,3 @@
-import type { PluginOption } from "vite";
 import {
   getSheet,
   type SVGSpriteOptions,
@@ -20,7 +19,7 @@ function isSheetImport(id: string) {
 
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: ["assets/icons/**/*.svg"] },
-): PluginOption {
+) {
   let svg: Promise<string>;
 
   let componentImportId: string | null;

@@ -27,10 +27,11 @@
       "types": "./lib/vite-plugin.d.ts"
     }
   },
-  "workspaces": [
-    "./"
+  "keywords": [
+    "svg",
+    "sprite",
+    "icons"
   ],
-  "keywords": [],
   "author": "Tim Havlicek",
   "license": "ISC",
   "scripts": {

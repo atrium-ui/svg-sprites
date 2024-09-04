@@ -29,6 +29,7 @@ export function createSheetCode(svg: string) {
 export interface SVGSpriteOptions {
   dir: string[];
   svg?: SVGSpriter.Config;
+  transform?: (code: string) => string;
 }
 
 export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
@@ -58,7 +59,8 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
 
     types.push(path.basename(name, path.extname(name)));
 
-    spriter.add(entry, name, fs.readFileSync(entry, { encoding: "utf-8" }));
+    const svgCode = fs.readFileSync(entry, { encoding: "utf-8" });
+    spriter.add(entry, name, options.transform ? options.transform(svgCode) : svgCode);
   }
 
   // generate types
