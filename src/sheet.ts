@@ -29,7 +29,7 @@ export function createSheetCode(svg: string) {
 export interface SVGSpriteOptions {
   dir: string[];
   svg?: SVGSpriter.Config;
-  transform?: (code: string) => string;
+  transform?: (code: string, file: string) => string;
 }
 
 export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
@@ -57,10 +57,14 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
     const rootDir = rootDirs.find((dir) => entry.match(`${dir}/`));
     const name = entry.replace(`${rootDir}/`, "");
 
-    types.push(path.basename(name, path.extname(name)));
+    types.push(name.replace(path.extname(name), ""));
 
     const svgCode = fs.readFileSync(entry, { encoding: "utf-8" });
-    spriter.add(entry, name, options.transform ? options.transform(svgCode) : svgCode);
+    spriter.add(
+      entry,
+      name,
+      options.transform ? options.transform(svgCode, entry) : svgCode,
+    );
   }
 
   // generate types
@@ -84,6 +88,8 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
 let sheetData: string | undefined;
 
 export async function getSheet(options: SVGSpriteOptions, force = false) {
-  if (!sheetData || force) sheetData = await buildSheet(options);
+  if (!sheetData || force) {
+    sheetData = await buildSheet(options);
+  }
   return sheetData;
 }

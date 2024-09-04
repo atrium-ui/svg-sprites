@@ -4,6 +4,8 @@ import {
   replacePlaceholder,
   createSheetCode,
 } from "../sheet.js";
+import chokidar from "chokidar";
+import type { Plugin } from "vite";
 
 function isComponentImport(id: string) {
   return id.match("svg-sprites_svg-icon") || id.match("svg-sprites/svg-icon");
@@ -17,12 +19,25 @@ function isSheetImport(id: string) {
   );
 }
 
+const js = String.raw;
+const hmrSuffix = js`
+  if (import.meta.hot) {
+    import.meta.hot.accept((newModule) => {
+      if (newModule) {
+        console.log('updated: count is now ', newModule)
+      }
+    })
+  }
+`;
+
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: ["assets/icons/**/*.svg"] },
-) {
+): Plugin {
   let svg: Promise<string>;
 
   let componentImportId: string | null;
+
+  const sheetModules = new Set<string>();
 
   return {
     name: "svg-sprites",
@@ -30,6 +45,17 @@ export default function svgSprite(
 
     async buildStart() {
       svg = getSheet(options);
+    },
+
+    configureServer(server) {
+      chokidar.watch(options.dir).on("all", async (event, path) => {
+        svg = getSheet(options, true);
+
+        for (const id of sheetModules) {
+          const module = server.moduleGraph.idToModuleMap.get(id);
+          if (module) server.reloadModule(module);
+        }
+      });
     },
 
     async resolveId(source, importer, options) {
@@ -57,13 +83,15 @@ export default function svgSprite(
 
     async transform(source, id) {
       if (id === componentImportId) {
+        sheetModules.add(id);
         const code = replacePlaceholder(source, await svg);
-        return { code };
+        return { code: `${code}\n${hmrSuffix}` };
       }
 
       if (isSheetImport(id)) {
+        sheetModules.add(id);
         const code = replacePlaceholder(source, await svg);
-        return { code };
+        return { code: `${code}\n${hmrSuffix}` };
       }
 
       return null;
