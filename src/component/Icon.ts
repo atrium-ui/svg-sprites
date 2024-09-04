@@ -14,7 +14,7 @@ if (typeof window !== "undefined") {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-if (!("HTMLElement" in globalThis)) globalThis.HTMLElement = class { };
+if (!("HTMLElement" in globalThis)) globalThis.HTMLElement = class {};
 
 // TODO: width, height, size attributes
 
@@ -103,12 +103,11 @@ export class SvgIcon extends HTMLElement {
       }
     }
 
-    this.use &&
-      this.use.setAttributeNS(
-        "http://www.w3.org/1999/xlink",
-        "href",
-        svgSheetUrl + "#" + this.icon
-      );
+    this.use?.setAttributeNS(
+      "http://www.w3.org/1999/xlink",
+      "href",
+      `${svgSheetUrl}#${this.icon}`,
+    );
   }
 
   attributeChangedCallback(): void {
@@ -124,7 +123,11 @@ export class SvgIcon extends HTMLElement {
     this.use = document.createElementNS("http://www.w3.org/2000/svg", "use");
 
     this.svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    this.svg.setAttributeNS("http://www.w3.org/2000/svg", "xlink", "http://www.w3.org/1999/xlink");
+    this.svg.setAttributeNS(
+      "http://www.w3.org/2000/svg",
+      "xlink",
+      "http://www.w3.org/1999/xlink",
+    );
 
     this.svg.append(this.use);
     shadow.append(this.svg);

@@ -1,4 +1,9 @@
-import { getSheet, SVGSpriteOptions, createSheetCode, replacePlaceholder } from "../sheet.js";
+import {
+  getSheet,
+  type SVGSpriteOptions,
+  createSheetCode,
+  replacePlaceholder,
+} from "../sheet.js";
 
 function isSheetImport(id: string) {
   return id.match("sprite-sheet.js");

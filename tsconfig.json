@@ -9,5 +9,12 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true
   },
-  "exclude": ["node_modules", "dist", "plugin", "component", "loader", "test"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "plugin",
+    "component",
+    "loader",
+    "test"
+  ]
 }

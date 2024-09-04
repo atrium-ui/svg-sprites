@@ -50,11 +50,11 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
 
   const rootDirs = options.dir.map((p) => p.replace(/(\/(\*+))+\.(.+)/g, ""));
 
-  let types: string[] = [];
+  const types: string[] = [];
 
   for (const entry of entries) {
-    const rootDir = rootDirs.find((dir) => entry.match(dir + "/"));
-    const name = entry.replace(rootDir + "/", "");
+    const rootDir = rootDirs.find((dir) => entry.match(`${dir}/`));
+    const name = entry.replace(`${rootDir}/`, "");
 
     types.push(name);
 
@@ -63,7 +63,7 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
 
   // generate types
   try {
-    const typesCode = `export type SvgIconName = ${types.map(t => `"${t}"`).join(" | ")};`;
+    const typesCode = `export type SvgIconName = ${types.map((t) => `"${t}"`).join(" | ")};`;
 
     writeFile("./node_modules/.svg-sprites/types.d.ts", typesCode);
   } catch (e) {

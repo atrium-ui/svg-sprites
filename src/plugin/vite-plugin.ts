@@ -1,5 +1,10 @@
 import type { PluginOption } from "vite";
-import { getSheet, SVGSpriteOptions, replacePlaceholder, createSheetCode } from "../sheet.js";
+import {
+  getSheet,
+  type SVGSpriteOptions,
+  replacePlaceholder,
+  createSheetCode,
+} from "../sheet.js";
 
 function isComponentImport(id: string) {
   return id.match("svg-sprites_svg-icon") || id.match("svg-sprites/svg-icon");
@@ -7,12 +12,14 @@ function isComponentImport(id: string) {
 
 function isSheetImport(id: string) {
   return (
-    id.match("svg-sprites_sheet") || id.match("svg-sprites/sheet") || id === "svg-sprites:sheet"
+    id.match("svg-sprites_sheet") ||
+    id.match("svg-sprites/sheet") ||
+    id === "svg-sprites:sheet"
   );
 }
 
 export default function svgSprite(
-  options: SVGSpriteOptions = { dir: ["assets/icons/**/*.svg"] }
+  options: SVGSpriteOptions = { dir: ["assets/icons/**/*.svg"] },
 ): PluginOption {
   let svg: Promise<string>;
 
@@ -49,14 +56,14 @@ export default function svgSprite(
       }
     },
 
-    async transform(code, id) {
+    async transform(source, id) {
       if (id === componentImportId) {
-        code = replacePlaceholder(code, await svg);
+        const code = replacePlaceholder(source, await svg);
         return { code };
       }
 
       if (isSheetImport(id)) {
-        code = replacePlaceholder(code, await svg);
+        const code = replacePlaceholder(source, await svg);
         return { code };
       }
 
