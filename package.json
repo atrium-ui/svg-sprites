@@ -1,6 +1,6 @@
 {
   "name": "svg-sprites",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "",
   "main": "lib/sprite-sheet.js",
   "module": "lib/sprite-sheet.js",
