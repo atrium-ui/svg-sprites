@@ -14,7 +14,7 @@ if (typeof window !== "undefined") {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-if (!("HTMLElement" in globalThis)) globalThis.HTMLElement = class {};
+if (!("HTMLElement" in globalThis)) globalThis.HTMLElement = class { };
 
 // TODO: width, height, size attributes
 
@@ -57,11 +57,11 @@ export class SvgIcon extends HTMLElement {
     return ["icon"];
   }
 
-  public get icon(): string | null {
+  public get icon(): SvgIconName | null {
     return this.getAttribute("icon");
   }
 
-  public set icon(icon: string | null) {
+  public set icon(icon: SvgIconName | null) {
     if (icon !== null) this.setAttribute("icon", icon);
   }
 
@@ -145,4 +145,6 @@ declare global {
   }
 }
 
-if ("customElements" in globalThis) customElements.define("svg-icon", SvgIcon);
+if ("customElements" in globalThis && !customElements.get("svg-icon")) {
+  customElements.define("svg-icon", SvgIcon);
+}

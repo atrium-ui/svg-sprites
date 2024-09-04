@@ -32,7 +32,7 @@ import svgSprite from "svg-sprites/vite";
 
 export default {
   plugins: [
-    svgSprite({ dir: "assets/icons/*.svg" }),
+    svgSprite({ dir: ["assets/icons/*.svg"] }),
   ],
 };
 ```

@@ -1,6 +1,12 @@
-import fs from "fs";
+import fs from "node:fs";
 import fastGlob from "fast-glob";
 import SVGSpriter from "svg-sprite";
+import path from "node:path";
+
+function writeFile(location: string, contents: string) {
+  fs.mkdirSync(path.dirname(location), { recursive: true });
+  fs.writeFileSync(location, contents);
+}
 
 export function replacePlaceholder(code: string, svg: string) {
   return code.replace(/\"_svgSheetString_\"/g, `\`${svg}\``);
@@ -44,17 +50,30 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
 
   const rootDirs = options.dir.map((p) => p.replace(/(\/(\*+))+\.(.+)/g, ""));
 
+  let types: string[] = [];
+
   for (const entry of entries) {
     const rootDir = rootDirs.find((dir) => entry.match(dir + "/"));
-    const relativePath = entry.replace(rootDir + "/", "");
+    const name = entry.replace(rootDir + "/", "");
 
-    spriter.add(entry, relativePath, fs.readFileSync(entry, { encoding: "utf-8" }));
+    types.push(name);
+
+    spriter.add(entry, name, fs.readFileSync(entry, { encoding: "utf-8" }));
+  }
+
+  // generate types
+  try {
+    const typesCode = `export type SvgIconName = ${types.map(t => `"${t}"`).join(" | ")};`;
+
+    writeFile("./node_modules/.svg-sprites/types.d.ts", typesCode);
+  } catch (e) {
+    console.error("Could not generate types", e);
   }
 
   const { result } = await spriter.compileAsync();
 
   if (process.env.EXPORT_SVG_SPRITE) {
-    fs.writeFileSync("./sprite.svg", result.defs.sprite.contents.toString("utf8"));
+    writeFile("./sprite.svg", result.defs.sprite.contents.toString("utf8"));
   }
 
   return result.symbol.sprite.contents.toString("utf8");
