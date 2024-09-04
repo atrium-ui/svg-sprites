@@ -68,5 +68,5 @@ export default function svgSprite(
 
       return null;
     },
-  };
+  } as const;
 }
