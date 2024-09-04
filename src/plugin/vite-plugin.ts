@@ -19,17 +19,6 @@ function isSheetImport(id: string) {
   );
 }
 
-const js = String.raw;
-const hmrSuffix = js`
-  if (import.meta.hot) {
-    import.meta.hot.accept((newModule) => {
-      if (newModule) {
-        console.log('updated: count is now ', newModule)
-      }
-    })
-  }
-`;
-
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: ["assets/icons/**/*.svg"] },
 ): Plugin {
@@ -85,13 +74,13 @@ export default function svgSprite(
       if (id === componentImportId) {
         sheetModules.add(id);
         const code = replacePlaceholder(source, await svg);
-        return { code: `${code}\n${hmrSuffix}` };
+        return { code: `${code}` };
       }
 
       if (isSheetImport(id)) {
         sheetModules.add(id);
         const code = replacePlaceholder(source, await svg);
-        return { code: `${code}\n${hmrSuffix}` };
+        return { code: `${code}` };
       }
 
       return null;
