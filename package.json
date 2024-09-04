@@ -41,7 +41,7 @@
     "build": "npm run build:main && npm run build:component && npm run build:vite && npm run build:webpack",
     "build:main": "tsup src/sprite-sheet.ts -d lib --format esm,cjs --dts",
     "build:component": "tsup src/component/Icon.ts -d lib --format esm,cjs --dts",
-    "build:vite": "tsup src/plugin/vite-plugin.ts -d lib --format esm,cjs --dts",
+    "build:vite": "tsup src/plugin/vite-plugin.ts -d lib --format esm,cjs --dts --external chokidar",
     "build:webpack": "tsup src/loader/webpack-loader.ts -d lib --format esm,cjs --dts",
     "lint": "eslint --ext .ts src"
   },
