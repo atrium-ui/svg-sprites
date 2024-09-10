@@ -1,10 +1,15 @@
-let svgSheetUrl = "";
-let svgSheetBlob: Blob;
+import { svg } from "svg-sprites/sheet";
+
+let svgSheet: HTMLDivElement;
 let supportsAdoptingStyleSheets = true;
 
+async function loadSvgSheet() {
+  svgSheet = document.createElement("div");
+  svgSheet.innerHTML = await svg();
+}
+
 if (typeof window !== "undefined") {
-  svgSheetBlob = new Blob(["_svgSheetString_"], { type: "image/svg+xml" });
-  svgSheetUrl = URL.createObjectURL(svgSheetBlob);
+  loadSvgSheet();
 
   supportsAdoptingStyleSheets =
     globalThis.ShadowRoot &&
@@ -12,17 +17,10 @@ if (typeof window !== "undefined") {
     "replace" in CSSStyleSheet.prototype;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-if (!("HTMLElement" in globalThis)) globalThis.HTMLElement = class {};
-
-// TODO: width, height, size attributes
-
-export class SvgIcon extends HTMLElement {
+export class FraIcon extends HTMLElement {
   static sheet?: CSSStyleSheet;
 
-  private svg?: SVGElement | null;
-  private use?: SVGUseElement | null;
+  static elementProperties = new Map([["name", { type: String, reflect: true }]]);
 
   static get styles() {
     return /*css*/ `
@@ -45,73 +43,36 @@ export class SvgIcon extends HTMLElement {
   }
 
   static getStyleSheet(): CSSStyleSheet {
-    if (!SvgIcon.sheet) {
+    if (!FraIcon.sheet) {
       const sheet = new CSSStyleSheet();
-      sheet.replaceSync(SvgIcon.styles);
-      SvgIcon.sheet = sheet;
+      sheet.replaceSync(FraIcon.styles);
+      FraIcon.sheet = sheet;
     }
-    return SvgIcon.sheet;
+    return FraIcon.sheet;
   }
 
   static get observedAttributes() {
-    return ["icon"];
+    return ["name"];
   }
 
-  public get icon(): SvgIconName | null {
-    return this.getAttribute("icon");
+  public get name(): SvgIconName | null {
+    return this.getAttribute("name") as SvgIconName;
   }
 
-  public set icon(icon: SvgIconName | null) {
-    if (icon !== null) this.setAttribute("icon", icon);
-  }
-
-  public get width(): string | null {
-    return this.getAttribute("width");
-  }
-
-  public set width(width: string | null) {
-    if (width !== null) this.setAttribute("width", width);
-  }
-
-  public get height(): string | null {
-    return this.getAttribute("height");
-  }
-
-  public set height(height: string | null) {
-    if (height !== null) this.setAttribute("height", height);
-  }
-
-  public get size(): string | null {
-    return this.getAttribute("size");
-  }
-
-  public set size(size: string | null) {
-    if (size !== null) this.setAttribute("size", size);
-  }
-
-  private update() {
-    const size = this.size;
-    if (size) {
-      this.svg?.setAttribute("width", size);
-      this.svg?.setAttribute("height", size);
-    } else {
-      if (this.width) {
-        this.svg?.setAttribute("width", this.width);
-      }
-      if (this.height) {
-        this.svg?.setAttribute("height", this.height);
-      }
-    }
-
-    this.use?.setAttributeNS(
-      "http://www.w3.org/1999/xlink",
-      "href",
-      `${svgSheetUrl}#${this.icon}`,
-    );
+  public set name(icon: SvgIconName | null) {
+    if (icon !== null) this.setAttribute("name", icon);
   }
 
   attributeChangedCallback(): void {
-    this.update();
+    const name = this.name;
+    const symbol = svgSheet.querySelector(`#${name}`);
+    if (this.shadowRoot && symbol) {
+      this.shadowRoot.innerHTML = /*html*/ `
+        <svg viewBox="${symbol.getAttribute("viewBox")}" aria-hidden="true">
+          ${symbol.innerHTML}
+        </svg>
+      `;
+    }
   }
 
   constructor() {
@@ -119,24 +80,11 @@ export class SvgIcon extends HTMLElement {
 
     const shadow = this.attachShadow({ mode: "open" });
 
-    this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    this.use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-
-    this.svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    this.svg.setAttributeNS(
-      "http://www.w3.org/2000/svg",
-      "xlink",
-      "http://www.w3.org/1999/xlink",
-    );
-
-    this.svg.append(this.use);
-    shadow.append(this.svg);
-
     if (supportsAdoptingStyleSheets) {
-      shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
+      shadow.adoptedStyleSheets = [FraIcon.getStyleSheet()];
     } else {
       const style = document.createElement("style");
-      style.textContent = SvgIcon.styles;
+      style.textContent = FraIcon.styles;
       shadow.appendChild(style);
     }
   }
@@ -144,10 +92,10 @@ export class SvgIcon extends HTMLElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "svg-icon": SvgIcon;
+    "svg-icon": FraIcon;
   }
 }
 
 if ("customElements" in globalThis && !customElements.get("svg-icon")) {
-  customElements.define("svg-icon", SvgIcon);
+  customElements.define("svg-icon", FraIcon);
 }
