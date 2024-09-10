@@ -85,6 +85,21 @@ export async function buildSheet(options: SVGSpriteOptions): Promise<string> {
   return result.symbol.sprite.contents.toString("utf8");
 }
 
+export async function getIconNames(options: SVGSpriteOptions) {
+  const entries = await fastGlob(options.dir);
+  const rootDirs = options.dir.map((p) => p.replace(/(\/(\*+))+\.(.+)/g, ""));
+  const types: string[] = [];
+
+  for (const entry of entries) {
+    const rootDir = rootDirs.find((dir) => entry.match(`${dir}/`));
+    const name = entry.replace(`${rootDir}/`, "");
+
+    types.push(name.replace(path.extname(name), ""));
+  }
+
+  return types;
+}
+
 let sheetData: string | undefined;
 
 export async function getSheet(options: SVGSpriteOptions, force = false) {
