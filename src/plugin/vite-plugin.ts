@@ -37,6 +37,10 @@ export default function svgSprite(
     },
 
     configureServer(server) {
+      if (server.config.mode === "test") {
+        return;
+      }
+
       chokidar.watch(options.dir).on("all", async (event, path) => {
         if (event !== "add") {
           svg = getSheet(options, true);
