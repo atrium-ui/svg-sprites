@@ -11,7 +11,10 @@ export default defineConfig({
   plugins: [
     svgSprite({
       dir: [dir1, dir2],
-      transform: (code) => code.replaceAll("black", "currentColor"),
+      transform: (code, file) => {
+        console.warn("transform", file);
+        return code.replaceAll("black", "currentColor");
+      },
     }),
   ],
 });
