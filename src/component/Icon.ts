@@ -2,6 +2,7 @@ import { svg } from "svg-sprites/sheet";
 
 let svgSheet: HTMLDivElement;
 let supportsAdoptingStyleSheets = true;
+let loaded: Promise<void>;
 
 async function loadSvgSheet() {
   svgSheet = document.createElement("div");
@@ -9,7 +10,7 @@ async function loadSvgSheet() {
 }
 
 if (typeof window !== "undefined") {
-  loadSvgSheet();
+  loaded = loadSvgSheet();
 
   supportsAdoptingStyleSheets =
     globalThis.ShadowRoot &&
@@ -63,9 +64,11 @@ export class FraIcon extends HTMLElement {
     if (icon !== null) this.setAttribute("name", icon);
   }
 
-  attributeChangedCallback(): void {
-    const name = this.name;
-    const symbol = svgSheet.querySelector(`#${name}`);
+  async attributeChangedCallback() {
+    await loaded;
+
+    const symbol = svgSheet.querySelector(`#${this.name?.replace(/\//g, "\\/")}`);
+
     if (this.shadowRoot && symbol) {
       this.shadowRoot.innerHTML = /*html*/ `
         <svg viewBox="${symbol.getAttribute("viewBox")}" aria-hidden="true">
