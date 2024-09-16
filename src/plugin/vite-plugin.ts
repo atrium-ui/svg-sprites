@@ -5,7 +5,6 @@ import {
   createSheetCode,
 } from "../sheet.js";
 import chokidar from "chokidar";
-import type { Plugin } from "vite";
 
 function isComponentImport(id: string) {
   return id.match("svg-sprites_svg-icon") || id.match("svg-sprites/svg-icon");
@@ -19,9 +18,10 @@ function isSheetImport(id: string) {
   );
 }
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function svgSprite(
   options: SVGSpriteOptions = { dir: ["assets/icons/**/*.svg"] },
-): Plugin {
+) {
   let svg: Promise<string>;
 
   let componentImportId: string | null;
