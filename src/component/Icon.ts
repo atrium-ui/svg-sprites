@@ -18,7 +18,7 @@ if (typeof window !== "undefined") {
     "replace" in CSSStyleSheet.prototype;
 }
 
-export class FraIcon extends HTMLElement {
+export class SvgIcon extends (globalThis.HTMLElement || {}) {
   static sheet?: CSSStyleSheet;
 
   static elementProperties = new Map([["name", { type: String, reflect: true }]]);
@@ -44,12 +44,12 @@ export class FraIcon extends HTMLElement {
   }
 
   static getStyleSheet(): CSSStyleSheet {
-    if (!FraIcon.sheet) {
+    if (!SvgIcon.sheet) {
       const sheet = new CSSStyleSheet();
-      sheet.replaceSync(FraIcon.styles);
-      FraIcon.sheet = sheet;
+      sheet.replaceSync(SvgIcon.styles);
+      SvgIcon.sheet = sheet;
     }
-    return FraIcon.sheet;
+    return SvgIcon.sheet;
   }
 
   static get observedAttributes() {
@@ -84,10 +84,10 @@ export class FraIcon extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
 
     if (supportsAdoptingStyleSheets) {
-      shadow.adoptedStyleSheets = [FraIcon.getStyleSheet()];
+      shadow.adoptedStyleSheets = [SvgIcon.getStyleSheet()];
     } else {
       const style = document.createElement("style");
-      style.textContent = FraIcon.styles;
+      style.textContent = SvgIcon.styles;
       shadow.appendChild(style);
     }
   }
@@ -95,10 +95,10 @@ export class FraIcon extends HTMLElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "svg-icon": FraIcon;
+    "svg-icon": SvgIcon;
   }
 }
 
 if ("customElements" in globalThis && !customElements.get("svg-icon")) {
-  customElements.define("svg-icon", FraIcon);
+  customElements.define("svg-icon", SvgIcon);
 }
